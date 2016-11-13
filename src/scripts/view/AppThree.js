@@ -10,6 +10,7 @@ export default class AppThree {
 		this.initThree();
 		this.initControls();
 		this.initObject();
+		this.initLights();
 		this.initSkinnedMesh();
 	}
 
@@ -51,7 +52,13 @@ export default class AppThree {
 		this.scene.add(mesh);
 	}
 
+	initLights() {
+		const lightA = new THREE.DirectionalLight(0xFFFFFF)
+		this.scene.add(lightA);
+	}
+
 	initSkinnedMesh() {
+		/*
 		// const url = 'models/simple-1.json';
 		// const url = 'models/new_exporter_test_pyramid_scene.json';
 		const url = 'models/test-02.json';
@@ -76,28 +83,42 @@ export default class AppThree {
 
 			this.skinnedMesh = skinnedMesh;
 		});
+		*/
 
 
-
-		/*
 		const loader = new THREE.JSONLoader();
 
-		// loader.load('models/test-02.json', (geometry, materials) => {
-		loader.load('models/simple.js', (geometry, materials) => {
+		loader.load('models/untitled.js', (geometry, materials) => {
+		// loader.load('models/simple.js', (geometry, materials) => {
 
 			for (const m of materials) {
 				m.skinning = true;
+				m.morphTargets = true;
 			}
 
-			const skinnedMesh = new THREE.SkinnedMesh(geometry, new THREE.MultiMaterial(materials));
-			skinnedMesh.scale.set(1, 1, 1);
+			// const material = materials[0];
+			// const material = new THREE.MeshBasicMaterial();
+			// const material = new THREE.MeshNormalMaterial();
+			const material = new THREE.MeshPhongMaterial();
+			material.skinning = true;
+			material.specular.setHSL(0, 0, 0.1);
+			material.color.setHSL(0.6, 0, 0.6);
+			material.shading = THREE.FlatShading;
+
+			const skinnedMesh = new THREE.SkinnedMesh(geometry, material);
+			skinnedMesh.scale.set(10, 10, 10);
 
 			this.scene.add(skinnedMesh);
 
 			this.mixer = new THREE.AnimationMixer(skinnedMesh);
 			this.mixer.clipAction(skinnedMesh.geometry.animations[0]).play();
+
+			this.helper = new THREE.SkeletonHelper(skinnedMesh);
+			this.helper.material.linewidth = 3;
+			// this.helper.visible = false;
+			this.scene.add(this.helper);
 		});
-		*/
+		
 	}
 
 	// ---------------------------------------------------------------------------------------------
@@ -109,6 +130,7 @@ export default class AppThree {
 
 		if (this.skinnedMesh) this.skinnedMesh.updateMatrixWorld();
 		if (this.mixer) this.mixer.update(this.clock.getDelta());
+		if (this.helper) this.helper.update();
 	}
 
 	draw() {
