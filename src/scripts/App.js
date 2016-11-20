@@ -1,41 +1,36 @@
+import AppAudio from './audio/AppAudio';
 import AppView from './view/AppView';
 
 export default class App {
 
-  constructor(el) {
-    this.el = el;
-    this.listeners = {};
+	constructor(el) {
+		this.el = el;
 
-    this.initView();
-  }
+		this.initLoader();
+	}
 
-  initView() {
-    this.view = new AppView();
-  }
+	initLoader() {
+		this.preloader = new createjs.LoadQueue();
+		this.preloader.installPlugin(createjs.Sound);
 
-  on(type, cb) {
-    this.listeners[type] = this.listeners[type] || [];
-    if (this.listeners[type].indexOf(cb) === -1) {
-      this.listeners[type].push(cb);
-    }
-  }
+		this.preloader.addEventListener('progress', (e) => {
+			console.log('preloader', e);
+		});
 
-  off(type, cb) {
-    if (this.listeners[type]) {
-      if (cb) {
-        const index = this.listeners[type].indexOf(cb);
-        if (index !== -1) {
-          this.listeners[type].splice(index, 1);
-        }
-      } else this.listeners[type] = [];
-    }
-  }
+		this.preloader.addEventListener('complete', (e) => {
+			console.log('preloader', e);
+			this.initView();
+			this.initAudio();
+		});
 
-  trigger(type, args) {
-    if (this.listeners[type]) {
-      for (const cb of this.listeners[type]) {
-        cb(args);
-      }
-    }
-  }
+		this.preloader.loadManifest('data/manifest.json');
+	}
+
+	initView() {
+		this.view = new AppView();
+	}
+
+	initAudio() {
+		this.audio = new AppAudio();
+	}
 }

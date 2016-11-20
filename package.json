@@ -5,6 +5,8 @@
   "dependencies": {
     "babel-polyfill": "^6.7.4",
     "controlkit": "^0.1.9",
+    "createjs-preloadjs": "^0.6.3",
+    "createjs-soundjs": "^0.6.2",
     "gsap": "^1.18.2",
     "npm-run-all": "^3.1.1",
     "sketch-js": "^1.1.1",
