@@ -58,38 +58,39 @@ export default class AppThree {
 	}
 
 	initSkinnedMesh() {
-		/*
-		// const url = 'models/simple-1.json';
-		// const url = 'models/new_exporter_test_pyramid_scene.json';
-		const url = 'models/test-02.json';
-		const loader = new THREE.ObjectLoader();
+		
+		const loader = new THREE.JSONLoader();
 
-		loader.load(url, (obj) => {
-			const skinnedMesh = obj.children[0];
-			// console.log(skinnedMesh);
-			skinnedMesh.material.skinning = true;
-			skinnedMesh.material.shininess = 0.0;
+		// loader.load('models/man-deer-08.json', (geometry, materials) => {
+		loader.load('models/low-poly-man-02.json', (geometry, materials) => {
+			console.log(geometry, materials);
 
-			skinnedMesh.updateMatrixWorld();
+			for (const m of materials) {
+				m.skinning = true;
+				m.morphTargets = true;
+			}
+
+			const material = new THREE.MeshPhongMaterial();
+			material.skinning = true;
+			material.specular.setHSL(0, 0, 0.1);
+			material.color.setHSL(0.6, 0, 0.6);
+			material.shading = THREE.FlatShading;
+
+			const skinnedMesh = new THREE.SkinnedMesh(geometry, material);
+			skinnedMesh.scale.set(10, 10, 10);
 
 			this.scene.add(skinnedMesh);
 
 			this.mixer = new THREE.AnimationMixer(skinnedMesh);
-			// for (let i = 0; i < skinnedMesh.geometry.animations.length; ++i) {
-				// this.mixer.clipAction(skinnedMesh.geometry.animations[i]);
-			// }
-
 			this.mixer.clipAction(skinnedMesh.geometry.animations[0]).play();
-
-			this.skinnedMesh = skinnedMesh;
 		});
-		*/
 
-
+		/*
 		const loader = new THREE.JSONLoader();
 
-		loader.load('models/untitled.js', (geometry, materials) => {
+		// loader.load('models/untitled.js', (geometry, materials) => {
 		// loader.load('models/simple.js', (geometry, materials) => {
+		loader.load('models/man-deer-08.json', (geometry, materials) => {
 
 			for (const m of materials) {
 				m.skinning = true;
@@ -118,6 +119,7 @@ export default class AppThree {
 			// this.helper.visible = false;
 			this.scene.add(this.helper);
 		});
+		*/
 		
 	}
 
