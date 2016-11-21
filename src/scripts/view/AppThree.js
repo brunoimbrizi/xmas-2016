@@ -9,7 +9,7 @@ export default class AppThree {
 
 		this.initThree();
 		this.initControls();
-		this.initObject();
+		// this.initObject();
 		this.initLights();
 		this.initSkinnedMesh();
 	}
@@ -58,39 +58,9 @@ export default class AppThree {
 	}
 
 	initSkinnedMesh() {
-		
 		const loader = new THREE.JSONLoader();
 
-		// loader.load('models/man-deer-08.json', (geometry, materials) => {
-		loader.load('models/low-poly-man-02.json', (geometry, materials) => {
-			console.log(geometry, materials);
-
-			for (const m of materials) {
-				m.skinning = true;
-				m.morphTargets = true;
-			}
-
-			const material = new THREE.MeshPhongMaterial();
-			material.skinning = true;
-			material.specular.setHSL(0, 0, 0.1);
-			material.color.setHSL(0.6, 0, 0.6);
-			material.shading = THREE.FlatShading;
-
-			const skinnedMesh = new THREE.SkinnedMesh(geometry, material);
-			skinnedMesh.scale.set(10, 10, 10);
-
-			this.scene.add(skinnedMesh);
-
-			this.mixer = new THREE.AnimationMixer(skinnedMesh);
-			this.mixer.clipAction(skinnedMesh.geometry.animations[0]).play();
-		});
-
-		/*
-		const loader = new THREE.JSONLoader();
-
-		// loader.load('models/untitled.js', (geometry, materials) => {
-		// loader.load('models/simple.js', (geometry, materials) => {
-		loader.load('models/man-deer-08.json', (geometry, materials) => {
+		loader.load('models/man-deer-08.js', (geometry, materials) => {
 
 			for (const m of materials) {
 				m.skinning = true;
@@ -98,8 +68,6 @@ export default class AppThree {
 			}
 
 			// const material = materials[0];
-			// const material = new THREE.MeshBasicMaterial();
-			// const material = new THREE.MeshNormalMaterial();
 			const material = new THREE.MeshPhongMaterial();
 			material.skinning = true;
 			material.specular.setHSL(0, 0, 0.1);
@@ -107,7 +75,7 @@ export default class AppThree {
 			material.shading = THREE.FlatShading;
 
 			const skinnedMesh = new THREE.SkinnedMesh(geometry, material);
-			skinnedMesh.scale.set(10, 10, 10);
+			skinnedMesh.scale.set(30, 30, 30);
 
 			this.scene.add(skinnedMesh);
 
@@ -119,8 +87,6 @@ export default class AppThree {
 			// this.helper.visible = false;
 			this.scene.add(this.helper);
 		});
-		*/
-		
 	}
 
 	// ---------------------------------------------------------------------------------------------

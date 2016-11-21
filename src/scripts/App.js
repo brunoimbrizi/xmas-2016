@@ -14,11 +14,11 @@ export default class App {
 		this.preloader.installPlugin(createjs.Sound);
 
 		this.preloader.addEventListener('progress', (e) => {
-			console.log('preloader', e);
+			// console.log('preloader', e);
 		});
 
 		this.preloader.addEventListener('complete', (e) => {
-			console.log('preloader', e);
+			// console.log('preloader', e);
 			this.initView();
 			this.initAudio();
 		});
