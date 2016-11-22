@@ -9,8 +9,10 @@
     "createjs-soundjs": "^0.6.2",
     "gsap": "^1.18.2",
     "npm-run-all": "^3.1.1",
+    "raf": "^3.3.0",
     "sketch-js": "^1.1.1",
-    "three": "^0.82.1"
+    "three": "^0.82.1",
+    "visibly.js": "^0.1.1"
   },
   "devDependencies": {
     "babel-cli": "^6.6.0",

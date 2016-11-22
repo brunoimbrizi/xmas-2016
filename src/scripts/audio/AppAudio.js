@@ -1,8 +1,9 @@
+import raf from 'raf';
+require('visibly.js');
+
 export default class AppAudio {
-
 	constructor() {
-		this.trackName = 'billie-jean';
-
+		this.playing = new Map();
 		this.muted = false;
 
 		// check initial state of the AudioContext
@@ -10,48 +11,84 @@ export default class AppAudio {
 		if (createjs.Sound.activePlugin.context.state === 'suspended') {
 			this.muted = true;
 		}
+
+		// start ticking
+		raf(this.update.bind(this));
+
+		// pause/resume with page visibility
+		visibly.onHidden(() => {
+			this.wasMuted = this.muted;
+			this.mute();
+		});
+
+		visibly.onVisible(() => {
+			if (!this.wasMuted) this.unmute();
+		});
 	}
 
-	play() {
-		this.player = createjs.Sound.play(this.trackName);
-		this.player.paused = this.muted;
+	play(name, params) {
+		if (!params) params = {};
 
-		this.player.volume = 0;
-		TweenMax.to(this.player, 0.2, { volume: 1 });
+		// start player
+		const player = createjs.Sound.play(name);
+		player.name = name;
+		player.paused = this.muted;
+		if (params.startAt) player.position = params.startAt;
 
-		this.player.delayedLoop = TweenMax.delayedCall(
-			this.player.duration * 0.001 - 70,
-			this.onCrossLoop,
-			[],
-			this
-		);
+		// loop to position
+		if (params.loopTo !== undefined) {
+			player.loopTo = params.loopTo;
+			player.loopAt = player.duration - 200;
+		}
 
-		if (this.muted) this.player.delayedLoop.pause();
+		// store
+		this.playing.set(name, player);
+
+		return player;
 	}
 
-	stop() {
-		if (this.player.delayedLoop) this.player.delayedLoop.kill();
-		this.player.stop();
-	}
-
-	onCrossLoop(player) {
-		console.log('SoundController.onCrossLoop', player);
-		this.play();
+	stop(name) {
+		if (this.playing.get(name)) {
+			this.playing.get(name).stop();
+			this.playing.delete(name);
+		}
 	}
 
 	mute() {
 		// pause all
-		this.player.paused = true;
-		if (this.player.delayedLoop) this.player.delayedLoop.pause();
+		for (let [name, player] of this.playing) {
+			player.paused = true;
+		}
 
 		this.muted = true;
 	}
 
 	unmute() {
 		// resume all
-		if (this.player.paused) this.player.paused = false;
-		if (this.player.delayedLoop && this.player.delayedLoop.paused) this.player.delayedLoop.resume();
+		for (let [name, player] of this.playing) {
+			if (player.paused) player.paused = false;
+		}
 
 		this.muted = false;
+	}
+
+	update() {
+		for (let [name, player] of this.playing) {
+			// clear finished
+			if (player.playState === createjs.Sound.PLAY_FINISHED) {
+				this.stop(name);
+			}
+
+			// loop
+			if (!player.loopAt) continue;
+			
+			if (player.position >= player.loopAt) {
+				const diff = player.position - player.loopAt;
+				this.play(player.name, { startAt: player.loopTo - diff, loopTo: player.loopTo });
+				player.loopAt = 0;
+			}
+		}
+
+		raf(this.update.bind(this));
 	}
 }
