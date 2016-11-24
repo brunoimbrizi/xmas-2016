@@ -1,4 +1,5 @@
 import UIView from './ui/UIView';
+import Controls from './ui/Controls';
 import WebGLView from './webgl/WebGLView';
 
 export default class AppView {
@@ -57,5 +58,6 @@ export default class AppView {
 
 	initUI() {
 		this.ui = new UIView(this);
+		// this.ui = new Controls(this);
 	}
 }
