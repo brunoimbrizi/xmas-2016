@@ -26,6 +26,10 @@ export default class AppAudio {
 		});
 	}
 
+	getPlayer(name) {
+		return this.playing.get(name);
+	}
+
 	play(name, params) {
 		if (!params) params = {};
 
@@ -84,8 +88,10 @@ export default class AppAudio {
 			
 			if (player.position >= player.loopAt) {
 				const diff = player.position - player.loopAt;
-				this.play(player.name, { startAt: player.loopTo - diff, loopTo: player.loopTo });
+				this.play(player.name, { startAt: player.loopTo + diff, loopTo: player.loopTo });
 				player.loopAt = 0;
+
+				console.log('loop', player.name);
 			}
 		}
 
