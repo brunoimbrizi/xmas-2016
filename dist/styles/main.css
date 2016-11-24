@@ -3,3 +3,24 @@ body {
 	overflow: hidden;
 	background-color: #222;
 }
+
+.ui {
+	position: absolute;
+	bottom: 10%;
+	left: 50%;
+	transform: translate(-50%, 0);
+}
+
+.ui .btn {
+	cursor: pointer;
+	display: inline-block;
+	content: ' ';
+	background-color: rgba(0, 0, 0, 0.2);
+	width: 100px;
+	height: 40px;
+	margin-left: 6px;
+}
+
+.ui .btn:active {
+	background-color: rgba(0, 0, 0, 0.3);
+}
