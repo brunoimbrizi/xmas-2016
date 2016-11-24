@@ -80,18 +80,53 @@ export default class WebGLView {
 		const skinnedMesh = new THREE.SkinnedMesh(geometry, material);
 		skinnedMesh.scale.set(30, 30, 30);
 
-		this.skinnedMesh = skinnedMesh;
-
 		this.scene.add(skinnedMesh);
 
 		this.mixer = new THREE.AnimationMixer(skinnedMesh);
-		this.mixer.clipAction(skinnedMesh.geometry.animations[0]).play();
+		// this.mixer.clipAction(skinnedMesh.geometry.animations[0]).play();
 
 		this.helper = new THREE.SkeletonHelper(skinnedMesh);
 		this.helper.material.linewidth = 3;
 		// this.helper.visible = false;
 		this.scene.add(this.helper);
+
+		this.skinnedMesh = skinnedMesh;
+		// this.initNormalLines();
 		// });
+	}
+
+	initNormalLines() {
+		const vertices = this.skinnedMesh.geometry.vertices;
+		const faces = this.skinnedMesh.geometry.faces;
+
+		const geometry = new THREE.Geometry();
+
+		for (let i = 0; i < faces.length; i++) {
+			const face = faces[i];
+			const normal = face.normal;
+			const centroid = this.getCentroid(vertices[face.a], vertices[face.b], vertices[face.c]);
+
+			const v1 = centroid.clone().multiplyScalar(30);
+			const v2 = v1.clone().add(normal.multiplyScalar(150));
+
+			geometry.vertices.push(v1);
+			geometry.vertices.push(v2);
+		}
+
+		const material = new THREE.LineBasicMaterial({ color: 0xFF0000 });
+
+		const line = new THREE.LineSegments(geometry, material);
+		this.scene.add(line);
+	}
+
+	getCentroid(va, vb, vc) {
+		const v = new THREE.Vector3();
+
+		v.x = (va.x + vb.x + vc.x) / 3;
+		v.y = (va.y + vb.y + vc.y) / 3;
+		v.z = (va.z + vb.z + vc.z) / 3;
+
+		return v;
 	}
 
 	// ---------------------------------------------------------------------------------------------
