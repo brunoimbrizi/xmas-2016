@@ -57,7 +57,7 @@ export default class AppView {
 	}
 
 	initUI() {
-		this.ui = new UIView(this);
-		// this.ui = new Controls(this);
+		// this.ui = new UIView(this);
+		this.ui = new Controls(this);
 	}
 }
