@@ -7,5 +7,7 @@
 		{ "id": "drums-o", "src": "/sounds/Billie Jeanie Origin Drums.mp3" },
 		{ "id": "bass-o", "src": "/sounds/Billie Jeanie Origin Bass.mp3" },
 		{ "id": "key-o", "src": "/sounds/Billie Jeanie Origin Key.mp3" }
+		{ "id": "model", "src": "/models/man-deer-08.json" },
+		{ "id": "beat-01", "src": "/sounds/beat-01.mp3" }
 	]
 }
