@@ -1,6 +1,6 @@
 const REF_TRACK = 'drums-o';
 
-export default class UIView {
+export default class Controls {
 
 	constructor() {
 		this.tracks = new Map()
@@ -11,7 +11,7 @@ export default class UIView {
 
 		this.toggleTrack = this.toggleTrack.bind(this);
 
-		this.buttons = document.querySelectorAll('#ui button');
+		this.buttons = document.querySelectorAll('.ui a');
 		for (const button of this.buttons) {
 			button.addEventListener('click', this.toggleTrack.bind(this));
 		}
