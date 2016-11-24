@@ -1,4 +1,5 @@
 import AppThree from './AppThree';
+import UIView from './UIView';
 
 export default class AppView {
 
@@ -6,6 +7,7 @@ export default class AppView {
 		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
 		this.initSketch();
+		this.initUIView();
 	}
 
 	initSketch() {
@@ -50,5 +52,9 @@ export default class AppView {
 
 	initThree() {
 		this.three = new AppThree(this);
+	}
+
+	initUIView() {
+		this.uiView = new UIView(this);
 	}
 }

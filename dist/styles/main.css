@@ -3,3 +3,23 @@ body {
 	overflow: hidden;
 	background-color: #222;
 }
+
+#ui {
+	position: fixed;
+	bottom: 20px;
+	left: 50%;
+	list-style: none;
+	transform: translate3d(-50%, -50%, 0);
+}
+
+#ui li {
+	display: inline;
+	margin: 0 5px;
+}
+
+#ui li button {
+	color: white;
+	background-color: transparent;
+	padding: 2px 10px;
+	border: 2px solid white;
+}

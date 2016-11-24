@@ -1,3 +1,5 @@
+import 'babel-polyfill';
+
 global.ControlKit = require('controlkit');
 global.Sketch = require('sketch-js');
 global.TweenMax = require('gsap');
