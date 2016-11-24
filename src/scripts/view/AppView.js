@@ -1,4 +1,5 @@
-import AppThree from './AppThree';
+import UIView from './ui/UIView';
+import WebGLView from './webgl/WebGLView';
 
 export default class AppView {
 
@@ -13,28 +14,29 @@ export default class AppView {
 			type: Sketch.WEBGL,
 			element: this.renderer.domElement,
 			context: this.renderer.context,
-			autopause: false,
+			autopause: true,
 			retina: (window.devicePixelRatio >= 2),
 			fullscreen: true
 		});
 
 		this.sketch.setup = () => {
-			this.initThree();
+			this.initWebGL();
+			this.initUI();
 		};
 
 		this.sketch.update = () => {
-			this.three.update();
+			this.webGL.update();
 		};
 
 		this.sketch.draw = () => {
-			this.three.draw();
+			this.webGL.draw();
 		};
 
 		this.sketch.resize = () => {
 			this.hw = this.sketch.width * 0.5;
 			this.hh = this.sketch.height * 0.5;
 
-			this.three.resize();
+			this.webGL.resize();
 		};
 
 		this.sketch.touchstart = () => {
@@ -48,7 +50,12 @@ export default class AppView {
 		};
 	}
 
-	initThree() {
-		this.three = new AppThree(this);
+	initWebGL() {
+		document.querySelector('.main').appendChild(this.renderer.domElement);
+		this.webGL = new WebGLView(this);
+	}
+
+	initUI() {
+		this.ui = new UIView(this);
 	}
 }

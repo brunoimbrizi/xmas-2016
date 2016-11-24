@@ -1,6 +1,6 @@
 const glslify = require('glslify');
 
-export default class AppThree {
+export default class WebGLView {
 
 	constructor(view) {
 		this.view = view;
@@ -43,8 +43,8 @@ export default class AppThree {
 
 		const material = new THREE.ShaderMaterial({
 			uniforms: {},
-			vertexShader: glslify('../../shaders/default.vert'),
-			fragmentShader: glslify('../../shaders/default.frag'),
+			vertexShader: glslify('../../../shaders/default.vert'),
+			fragmentShader: glslify('../../../shaders/default.frag'),
 			wireframe: true
 		});
 
@@ -60,33 +60,38 @@ export default class AppThree {
 	initSkinnedMesh() {
 		const loader = new THREE.JSONLoader();
 
-		loader.load('models/man-deer-08.js', (geometry, materials) => {
+		// loader.load('models/man-deer-08.json', (geometry, materials) => {
+		const obj = loader.parse(app.preloader.getResult('model'));
+		const geometry = obj.geometry;
+		const materials = obj.materials;
 
-			for (const m of materials) {
-				m.skinning = true;
-				m.morphTargets = true;
-			}
+		for (const m of materials) {
+			m.skinning = true;
+			m.morphTargets = true;
+		}
 
-			// const material = materials[0];
-			const material = new THREE.MeshPhongMaterial();
-			material.skinning = true;
-			material.specular.setHSL(0, 0, 0.1);
-			material.color.setHSL(0.6, 0, 0.6);
-			material.shading = THREE.FlatShading;
+		// const material = materials[0];
+		const material = new THREE.MeshPhongMaterial();
+		material.skinning = true;
+		material.specular.setHSL(0, 0, 0.1);
+		material.color.setHSL(0.6, 0, 0.6);
+		material.shading = THREE.FlatShading;
 
-			const skinnedMesh = new THREE.SkinnedMesh(geometry, material);
-			skinnedMesh.scale.set(30, 30, 30);
+		const skinnedMesh = new THREE.SkinnedMesh(geometry, material);
+		skinnedMesh.scale.set(30, 30, 30);
 
-			this.scene.add(skinnedMesh);
+		this.skinnedMesh = skinnedMesh;
 
-			this.mixer = new THREE.AnimationMixer(skinnedMesh);
-			this.mixer.clipAction(skinnedMesh.geometry.animations[0]).play();
+		this.scene.add(skinnedMesh);
 
-			this.helper = new THREE.SkeletonHelper(skinnedMesh);
-			this.helper.material.linewidth = 3;
-			// this.helper.visible = false;
-			this.scene.add(this.helper);
-		});
+		this.mixer = new THREE.AnimationMixer(skinnedMesh);
+		this.mixer.clipAction(skinnedMesh.geometry.animations[0]).play();
+
+		this.helper = new THREE.SkeletonHelper(skinnedMesh);
+		this.helper.material.linewidth = 3;
+		// this.helper.visible = false;
+		this.scene.add(this.helper);
+		// });
 	}
 
 	// ---------------------------------------------------------------------------------------------

@@ -1,6 +1,7 @@
 {
 	"manifest": [
-		{ "id": "billie-jean", "src": "/sounds/Billie Jean (Instrumental w back vocals)_01.mp3" },
+		{ "id": "model", "src": "/models/man-deer-08.json" },
+		{ "id": "beat-01", "src": "/sounds/beat-01.mp3" },
 		{ "id": "alphadog", "src": "/sounds/46905__alphahog__dyquestt.mp3" }
 	]
 }
