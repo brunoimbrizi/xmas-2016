@@ -1,7 +1,9 @@
+import keyMap from '../../util/keyMap';;
+import { getRandomInt } from '../../util/math';;
+
 const REF_TRACK = 'drums-o';
 
 export default class Controls {
-
 	constructor() {
 		this.tracks = new Map()
 			.set('drums', { xmas: false })
@@ -9,9 +11,17 @@ export default class Controls {
 			.set('key', { xmas: false })
 			;
 
+		this.buttons = document.querySelectorAll('.ui a');
+
+		this.addListeners();
+	}
+
+	addListeners() {
+		this.playGimmick = this.playGimmick.bind(this);
 		this.toggleTrack = this.toggleTrack.bind(this);
 
-		this.buttons = document.querySelectorAll('.ui a');
+		document.addEventListener('keyup', this.playGimmick.bind(this));
+		document.addEventListener('touchend', this.playGimmick.bind(this));
 		for (const button of this.buttons) {
 			button.addEventListener('click', this.toggleTrack.bind(this));
 		}
@@ -55,6 +65,14 @@ export default class Controls {
 		} else {
 			app.audio.stop(toStop);
 			app.audio.play(toPlay, { startAt: position });
+		}
+	}
+
+	playGimmick(event) {
+		if (event.type === 'touchend') {
+			app.audio.play(`gimmick-${keyMap.get(getRandomInt(65, 91))}`);
+		} else {
+			app.audio.play(`gimmick-${keyMap.get(event.keyCode)}`);
 		}
 	}
 }
