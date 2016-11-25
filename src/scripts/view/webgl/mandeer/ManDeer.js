@@ -18,13 +18,13 @@ export default class ManDeer {
 		}
 
 		// const material = materials[0];
-		// const material = new THREE.MeshPhongMaterial();
-		const material = new THREE.MeshBasicMaterial();
+		const material = new THREE.MeshPhongMaterial();
+		// const material = new THREE.MeshBasicMaterial();
 		material.skinning = true;
-		// material.specular.setHSL(0, 0, 0.1);
+		material.specular.setHSL(0, 0, 0.1);
 		material.color.setHSL(0.6, 0, 0.6);
 		material.shading = THREE.FlatShading;
-		material.wireframe = true;
+		// material.wireframe = true;
 
 		this.object = new THREE.SkinnedMesh(geometry, material);
 		this.object.scale.set(30, 30, 30);

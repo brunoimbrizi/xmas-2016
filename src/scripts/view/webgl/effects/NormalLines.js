@@ -2,8 +2,9 @@ const glslify = require('glslify');
 
 export default class NormalLines {
 
-	constructor(target) {
+	constructor(target, camera) {
 		this.target = target;
+		this.camera = camera;
 
 		this.initLines();
 	}
@@ -18,7 +19,7 @@ export default class NormalLines {
 		const tFaces = this.target.geometry.faces;
 		const tScale = this.target.scale.x;
 
-		for (let i = 19, j = 0; i < 20; i++) {
+		for (let i = 0, j = 0; i < tFaces.length; i += 20) {
 			const face = tFaces[i];
 			const normal = face.normal.clone();
 			const centroid = this.getCentroid(tVertices[face.a], tVertices[face.b], tVertices[face.c]);
@@ -29,8 +30,8 @@ export default class NormalLines {
 			positions.push(v1.x, v1.y, v1.z);
 			positions.push(v2.x, v2.y, v2.z);
 
-			colors.push(1, 1, 1);
-			colors.push(1, 1, 1);
+			colors.push(1, 0, 0);
+			colors.push(1, 0, 0);
 
 			indices.push(j, j + 1);
 
@@ -47,9 +48,9 @@ export default class NormalLines {
 			uniforms: {},
 			vertexShader: glslify('../../../../shaders/normal-line.vert'),
 			fragmentShader: glslify('../../../../shaders/normal-line.frag'),
-			wireframe: true
+			transparent: true
 		});
-
+		
 		this.object = new THREE.LineSegments(geometry, material);
 	}
 
@@ -64,6 +65,36 @@ export default class NormalLines {
 	}
 
 	update() {
+		const positions = this.object.geometry.attributes.position.array;
+		const colors = this.object.geometry.attributes.color.array;
+		const p1 = new THREE.Vector3();
+		const p2 = new THREE.Vector3();
+		const line = new THREE.Vector3();
+		const eye = this.camera.position.clone().normalize();
 
+		for (let i3 = 0, i6 = 0; i6 < positions.length; i3 += 3, i6 += 6) {
+			p1.x = positions[i6 + 0];
+			p1.y = positions[i6 + 1];
+			p1.z = positions[i6 + 2];
+
+			p2.x = positions[i6 + 3];
+			p2.y = positions[i6 + 4];
+			p2.z = positions[i6 + 5];
+
+			line.x = p2.x - p1.x;
+			line.y = p2.y - p1.y;
+			line.z = p2.z - p1.z;
+
+			const dot = eye.dot(line.normalize());
+			const absDot = (dot < 0) ? dot * -1 : dot;
+			// const factor = 1 - absDot;
+			const factor = dot;
+			
+			// green channel
+			colors[i6 + 1] = factor;
+			colors[i6 + 4] = factor;
+		}
+
+		this.object.geometry.attributes.color.needsUpdate = true;
 	}
 }

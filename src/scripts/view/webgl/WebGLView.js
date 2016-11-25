@@ -58,18 +58,19 @@ export default class WebGLView {
 	}
 
 	initLights() {
-		const lightA = new THREE.DirectionalLight(0xFFFFFF)
+		const lightA = new THREE.DirectionalLight(0xFFFFFF);
+		lightA.position.set(0, 1, 0);
 		this.scene.add(lightA);
 	}
 
 	initManDeer() {
 		this.mandeer = new ManDeer();
 		this.scene.add(this.mandeer.object);
-		this.scene.add(this.mandeer.helper);
+		// this.scene.add(this.mandeer.helper);
 	}
 
 	initEffects() {
-		this.effect = new NormalLines(this.mandeer.object);
+		this.effect = new NormalLines(this.mandeer.object, this.camera);
 		this.scene.add(this.effect.object);
 	}
 
