@@ -8,6 +8,8 @@ export default class AppAudio {
 
 		// check initial state of the AudioContext
 		createjs.Sound.initializeDefaultPlugins();
+		createjs.Sound.alternateExtensions = ['mp3'];
+
 		if (createjs.Sound.activePlugin.context.state === 'suspended') {
 			this.muted = true;
 		}
@@ -85,7 +87,7 @@ export default class AppAudio {
 
 			// loop
 			if (!player.loopAt) continue;
-			
+
 			if (player.position >= player.loopAt) {
 				const diff = player.position - player.loopAt;
 				this.play(player.name, { startAt: player.loopTo + diff, loopTo: player.loopTo });

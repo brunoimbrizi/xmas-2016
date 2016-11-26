@@ -4,26 +4,33 @@ import { getRandomInt } from '../../util/math';;
 const REF_TRACK = 'drums-o';
 
 export default class Controls {
-	constructor() {
+	constructor(element) {
+		this.element = element;
+
 		this.tracks = new Map()
-			.set('drums', { xmas: false })
-			.set('bass', { xmas: false })
-			.set('key', { xmas: false })
+			.set('drums', { xmas: false, element: this.element.querySelector('[data-track="drums"]') })
+			.set('bass', { xmas: false, element: this.element.querySelector('[data-track="bass"]') })
+			.set('key', { xmas: false, element: this.element.querySelector('[data-track="key"]') })
 			;
 
-		this.buttons = document.querySelectorAll('.ui a');
+		this.muteButton = this.element.querySelector('.mute');
+		this.trackButtons = this.element.querySelectorAll('[data-track]');
 
 		this.addListeners();
 	}
 
 	addListeners() {
+		this.mute = this.mute.bind(this);
 		this.playGimmick = this.playGimmick.bind(this);
 		this.toggleTrack = this.toggleTrack.bind(this);
 
+		this.muteButton.addEventListener('click', this.mute.bind(this));
+
 		document.addEventListener('keyup', this.playGimmick.bind(this));
 		document.addEventListener('touchend', this.playGimmick.bind(this));
-		for (const button of this.buttons) {
-			button.addEventListener('click', this.toggleTrack.bind(this));
+
+		for (const track of this.tracks.values()) {
+			track.element.addEventListener('click', this.toggleTrack.bind(this));
 		}
 	}
 
@@ -38,6 +45,16 @@ export default class Controls {
 		}, 7800);
 	}
 
+	mute() {
+		if (app.audio.muted) {
+			app.audio.unmute();
+			this.muteButton.classList.remove('muted');
+		} else {
+			app.audio.mute();
+			this.muteButton.classList.add('muted');
+		}
+	}
+
 	toggleTrack(param) {
 		let trackId;
 		if (typeof param === 'string') {
@@ -47,12 +64,20 @@ export default class Controls {
 			trackId = event.currentTarget.dataset.track;
 		}
 
-		this.tracks.get(trackId).xmas = !this.tracks.get(trackId).xmas;
+		const track = this.tracks.get(trackId);
 
-		const toPlaySuffix = this.tracks.get(trackId).xmas ? 'x' : 'o';
-		const toStopSuffix = this.tracks.get(trackId).xmas ? 'o' : 'x';
+		track.xmas = !track.xmas;
+
+		const toPlaySuffix = track.xmas ? 'x' : 'o';
+		const toStopSuffix = track.xmas ? 'o' : 'x';
 		const toPlay = `${trackId}-${toPlaySuffix}`;
 		const toStop = `${trackId}-${toStopSuffix}`;
+
+		if (toPlaySuffix === 'x') {
+			track.element.classList.add('xmas');
+		} else {
+			track.element.classList.remove('xmas');
+		}
 
 		const position = app.audio.playing.get(REF_TRACK).position;
 
