@@ -39,9 +39,13 @@ export default class Controls {
 	}
 
 	start() {
-		app.audio.play('drums-o');
-		app.audio.play('bass-o');
-		app.audio.play('key-o');
+		app.audio.play(REF_TRACK, { loopTo: 0 });
+		app.audio.play('bass-o', { loopTo: () => {
+			return app.audio.playing.get(REF_TRACK).position;
+		}});
+		app.audio.play('key-o', { loopTo: () => {
+			return app.audio.playing.get(REF_TRACK).position;
+		}});
 	}
 
 	mute() {
@@ -82,13 +86,17 @@ export default class Controls {
 
 		if (toStop === REF_TRACK) {
 			app.audio.playing.get(REF_TRACK).volume = 0;
-			app.audio.play(toPlay, { startAt: position });
+			app.audio.play(toPlay, { startAt: position, loopTo: () => {
+				return app.audio.playing.get(REF_TRACK).position;
+			}});
 		} else if (toPlay === REF_TRACK) {
 			app.audio.playing.get(REF_TRACK).volume = 1;
 			app.audio.stop(toStop);
 		} else {
 			app.audio.stop(toStop);
-			app.audio.play(toPlay, { startAt: position });
+			app.audio.play(toPlay, { startAt: position, loopTo: () => {
+				return app.audio.playing.get(REF_TRACK).position;
+			}});
 		}
 	}
 
