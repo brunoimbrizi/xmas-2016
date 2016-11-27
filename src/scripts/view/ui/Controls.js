@@ -1,5 +1,5 @@
-import keyMap from '../../util/keyMap';;
-import { getRandomInt } from '../../util/math';;
+import keyMap from '../../util/keyMap';
+import { getRandomInt } from '../../util/math';
 
 const REF_TRACK = 'drums-o';
 
@@ -12,8 +12,11 @@ export default class Controls {
 			.set('bass', { xmas: false, element: this.element.querySelector('[data-track="bass"]') })
 			.set('key', { xmas: false, element: this.element.querySelector('[data-track="key"]') })
 			;
+		this.gimmickTimeout = null;
 
 		this.muteButton = this.element.querySelector('.mute');
+		this.gimmickButton = this.element.querySelector('.gimmick');
+		this.gimmickButtonSpan = this.gimmickButton.querySelector('span');
 		this.trackButtons = this.element.querySelectorAll('[data-track]');
 
 		this.addListeners();
@@ -24,6 +27,7 @@ export default class Controls {
 		this.playGimmick = this.playGimmick.bind(this);
 		this.toggleTrack = this.toggleTrack.bind(this);
 
+		this.gimmickButton.addEventListener('click', this.playGimmick.bind(this));
 		this.muteButton.addEventListener('click', this.mute.bind(this));
 
 		document.addEventListener('keyup', this.playGimmick.bind(this));
@@ -36,13 +40,8 @@ export default class Controls {
 
 	start() {
 		app.audio.play('drums-o');
-
-		// TODO: get loop start value + use raf
-		setTimeout(() => {
-			this.toggleTrack('drums');
-			this.toggleTrack('bass');
-			this.toggleTrack('key');
-		}, 7800);
+		app.audio.play('bass-o');
+		app.audio.play('key-o');
 	}
 
 	mute() {
@@ -94,10 +93,30 @@ export default class Controls {
 	}
 
 	playGimmick(event) {
-		if (event.type === 'touchend') {
-			app.audio.play(`gimmick-${keyMap.get(getRandomInt(65, 91))}`);
+		let letter;
+		if (event.type === 'keyup') {
+			letter = keyMap.get(event.keyCode);
 		} else {
-			app.audio.play(`gimmick-${keyMap.get(event.keyCode)}`);
+			const key = getRandomInt(65, 91);
+			letter = keyMap.get(key);
 		}
+		if (!letter) return;
+
+		const gimmickId = `gimmick-${letter}`;
+		if (app.audio.playing.has(gimmickId)) {
+			app.audio.stop(gimmickId);
+		}
+		app.audio.play(gimmickId);
+		this.showLetter(letter);
+	}
+
+	showLetter(letter) {
+		clearTimeout(this.gimmickTimeout);
+
+		this.gimmickTimeout = setTimeout(() => {
+			this.gimmickButton.classList.remove('active');
+		}, 1000);
+		this.gimmickButton.classList.add('active');
+		this.gimmickButtonSpan.innerText = letter;
 	}
 }

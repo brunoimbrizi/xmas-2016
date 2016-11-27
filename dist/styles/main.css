@@ -24,9 +24,11 @@ body {
 
 .ui .btn {
 	cursor: pointer;
+	float: left;
 	display: inline-block;
-	width: 40px;
-	height: 40px;
+	width: 80px;
+	height: 80px;
+	line-height: 80px;
 	margin: 0 10px;
 	background-color: rgba(0, 0, 0, 0.2);
 	background-repeat: no-repeat;
@@ -39,20 +41,41 @@ body {
 }
 
 .ui .btn.xmas {
-	background-color: #f00;
+	background-color: #F52A2A;
 }
 
-.ui .btn.start {
-	display: block;
-	width: 170px;
-	line-height: 40px;
-	margin-bottom: 20px;
+/* Gimmick */
+.ui .btn.gimmick {
 	color: #fff;
+	text-align: center;
 	text-transform: uppercase;
 	font-family: 'Arial', Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 16px;
 	letter-spacing: 1px;
 }
+.ui .btn.gimmick {
+	background-position: 50% 50%;
+	transition: background-position 0.3s ease-out;
+}
+.ui .btn.gimmick.active {
+	background-position: 15% 50%;
+	transition: background-position 0.3s ease-out;
+}
+.ui .btn.gimmick span {
+	display: inline-block;
+	width: 60px;
+	height: 60px;
+	opacity: 0;
+	transform: translate3d(30%, 0, 0);
+	transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+.ui .btn.gimmick.active span {
+	transform: translate3d(35%, 0, 0);
+	opacity: 1;
+	transition: opacity 0.1s ease-in, transform 0.3s ease-in;
+}
+
+/* Controls */
 .ui .btn.mute {
 	pointer-events: auto;
 	position: absolute;
@@ -73,19 +96,26 @@ body {
 .ui .btn.key {
 	background-image: url('../images/icon-key.png');
 }
+.ui .btn.gimmick {
+	background-image: url('../images/icon-gimmick.png');
+}
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
 	.ui .btn.drums {
 		background-image: url('../images/icon-drums@2x.png');
-		background-size: 40px;
+		background-size: 60px;
 	}
 	.ui .btn.bass {
 		background-image: url('../images/icon-bass@2x.png');
-		background-size: 40px;
+		background-size: 60px;
 	}
 	.ui .btn.key {
 		background-image: url('../images/icon-key@2x.png');
-		background-size: 40px;
+		background-size: 60px;
+	}
+	.ui .btn.gimmick span {
+		background-image: url('../images/icon-gimmick@2x.png');
+		background-size: 60px;
 	}
 	.ui .btn.mute {
 		background-image: url('../images/icon-audio-playing@2x.png');

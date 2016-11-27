@@ -7,10 +7,6 @@ export default class AppView {
 		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
 		this.initSketch();
-
-		this.startButton = document.querySelector('.btn.start');
-		this.start = this.start.bind(this);
-		this.startButton.addEventListener('click', this.start);
 	}
 
 	initSketch() {
@@ -26,6 +22,8 @@ export default class AppView {
 		this.sketch.setup = () => {
 			this.initWebGL();
 			this.initUI();
+
+			this.start();
 		};
 
 		this.sketch.update = () => {
@@ -64,7 +62,6 @@ export default class AppView {
 	}
 
 	start() {
-		this.startButton.removeEventListener('click', this.start);
 		this.ui.start();
 	}
 }
