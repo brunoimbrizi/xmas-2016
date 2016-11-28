@@ -3,6 +3,7 @@ const glslify = require('glslify');
 import ManDeer from './mandeer/ManDeer';
 
 import NormalLines from './effects/NormalLines';
+import Discs from './effects/Discs';
 
 export default class WebGLView {
 
@@ -16,7 +17,8 @@ export default class WebGLView {
 		// this.initObject();
 		this.initLights();
 		this.initManDeer();
-		this.initEffects();
+		this.initNormalLines();
+		this.initDiscs();
 	}
 
 	initThree() {
@@ -25,7 +27,7 @@ export default class WebGLView {
 
 		// camera
 		this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
-		this.camera.position.z = 300;
+		this.camera.position.z = 140;
 	}
 
 	initControls() {
@@ -60,18 +62,34 @@ export default class WebGLView {
 	initLights() {
 		const lightA = new THREE.DirectionalLight(0xFFFFFF);
 		lightA.position.set(0, 1, 0);
-		this.scene.add(lightA);
+		// this.scene.add(lightA);
+		// this.camera.add(lightA);
+		// this.scene.add(this.camera);
+
+		const lightB = new THREE.PointLight(0x0000FF);
+		lightB.position.set(300, 1, -100);
+		this.scene.add(lightB);
+
+		const lightC = new THREE.PointLight(0x00FFFF);
+		lightC.position.set(-300, 1, -100);
+		this.scene.add(lightC);
 	}
 
 	initManDeer() {
 		this.mandeer = new ManDeer();
+		this.mandeer.object.position.y = -25;
 		this.scene.add(this.mandeer.object);
 		// this.scene.add(this.mandeer.helper);
 	}
 
-	initEffects() {
-		this.effect = new NormalLines(this.mandeer.object, this.camera);
-		this.scene.add(this.effect.object);
+	initNormalLines() {
+		this.normalLines = new NormalLines(this.mandeer.object, this.camera);
+		// this.scene.add(this.normalLines.object);
+	}
+
+	initDiscs() {
+		this.discs = new Discs(this.mandeer.object);
+		// this.scene.add(this.discs.object);
 	}
 
 	// ---------------------------------------------------------------------------------------------
@@ -83,7 +101,8 @@ export default class WebGLView {
 
 		if (this.mandeer) {
 			this.mandeer.update(this.clock.getDelta());
-			this.effect.update();
+			this.normalLines.update();
+			this.discs.update();
 		}
 
 		// const dot = this.face.normal.dot(this.camera.position.clone().normalize());
