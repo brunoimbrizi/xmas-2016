@@ -30,9 +30,11 @@ body {
 	height: 80px;
 	line-height: 80px;
 	margin: 0 10px;
+	border-radius: 2px;
 	background-color: rgba(0, 0, 0, 0.2);
 	background-repeat: no-repeat;
 	background-position: center center;
+	background-size: 40px;
 	transition: all 0.3s;
 }
 
@@ -58,7 +60,7 @@ body {
 	transition: background-position 0.3s ease-out;
 }
 .ui .btn.gimmick.active {
-	background-position: 15% 50%;
+	background-position: 27% 50%;
 	transition: background-position 0.3s ease-out;
 }
 .ui .btn.gimmick span {
@@ -66,11 +68,11 @@ body {
 	width: 60px;
 	height: 60px;
 	opacity: 0;
-	transform: translate3d(30%, 0, 0);
+	transform: translate3d(27%, 0, 0);
 	transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 .ui .btn.gimmick.active span {
-	transform: translate3d(35%, 0, 0);
+	transform: translate3d(32%, 0, 0);
 	opacity: 1;
 	transition: opacity 0.1s ease-in, transform 0.3s ease-in;
 }
