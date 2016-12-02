@@ -1,7 +1,11 @@
 body {
 	margin: 0;
 	overflow: hidden;
-	background-color: #222;
+	background-color: #000000;
+	background-image: url('../images/background-01.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 50% 50%;
 }
 
 .ui {

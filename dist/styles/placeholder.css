@@ -1,0 +1,50 @@
+body {
+	margin: 0;
+	overflow: hidden;
+	background-color: #000000;
+	background-image: url('../images/placeholder.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 50% 50%;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
+	color: #FFFFFF;
+}
+
+.main {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.info { 
+	flex: none;
+	max-width: 80%;
+	text-align: center;
+}
+
+.info h2 {
+	font-weight: bold;
+	font-size: 2.0em;
+	letter-spacing: 3;
+}
+
+.info p { 
+	font-size: 0.9em;
+	opacity: 0.3;
+	max-width: 80%;
+	margin: 0 auto;
+	line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+	.info h2 {
+		font-size: 3.5em;
+	}
+
+	.info p {
+		max-width: 60%;
+		font-size: 1em;
+	}
+}
