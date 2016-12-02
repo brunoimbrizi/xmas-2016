@@ -1,6 +1,6 @@
 {
 	"manifest": [
-		{ "id": "model", "src": "/models/man-deer-08.json" },
+		{ "id": "model", "src": "/models/man-deer-08-morph.json" },
 		{ "id": "drums-x", "src": "/sounds/Billie Jeanie Drums X.ogg" },
 		{ "id": "bass-x", "src": "/sounds/Billie Jeanie Bass X.ogg" },
 		{ "id": "key-x", "src": "/sounds/Billie Jeanie Key X.ogg" },
