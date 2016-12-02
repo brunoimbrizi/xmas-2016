@@ -21,14 +21,13 @@ body {
 	pointer-events: auto;
 	position: absolute;
 	bottom: 5%;
-	left: 50%;
+	left: 0;
+	width: 100%;
 	text-align: center;
-	transform: translate3d(-50%, 0, 0);
 }
 
 .ui .btn {
 	cursor: pointer;
-	float: left;
 	display: inline-block;
 	width: 80px;
 	height: 80px;
@@ -47,11 +46,12 @@ body {
 }
 
 .ui .btn.xmas {
-	background-color: #F52A2A;
+	background-color: rgba(245, 0, 42, 0.9);
 }
 
 /* Gimmick */
 .ui .btn.gimmick {
+	position: relative;
 	color: #fff;
 	text-align: center;
 	text-transform: uppercase;
@@ -69,6 +69,9 @@ body {
 }
 .ui .btn.gimmick span {
 	display: inline-block;
+	position: absolute;
+	top: 0;
+	left: 0;
 	width: 60px;
 	height: 60px;
 	opacity: 0;
@@ -76,7 +79,7 @@ body {
 	transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 .ui .btn.gimmick.active span {
-	transform: translate3d(32%, 0, 0);
+	transform: translate3d(40%, 0, 0);
 	opacity: 1;
 	transition: opacity 0.1s ease-in, transform 0.3s ease-in;
 }
@@ -119,7 +122,7 @@ body {
 		background-image: url('../images/icon-key@2x.png');
 		background-size: 60px;
 	}
-	.ui .btn.gimmick span {
+	.ui .btn.gimmick {
 		background-image: url('../images/icon-gimmick@2x.png');
 		background-size: 60px;
 	}
@@ -133,8 +136,34 @@ body {
 	}
 }
 
+/* Mobile */
 @media (max-width: 768px) {
-	.ui {
-		bottom: 10px;
+	.ui .btn {
+		width: 40px;
+		height: 40px;
+		line-height: 40px;
+		background-size: 20px;
+	}
+	.ui .btn.gimmick {
+		font-size: 12px;
+		background-image: url('../images/icon-touch.png');
+		transition: background-color 0.3s ease-in;
+	}
+	.ui .btn.gimmick.active {
+		background-color: rgba(245, 0, 42, 0.9);
+		background-position: 50% 50%;
+		transition: background-color 0.3s ease-out;
+	}
+	.ui .btn.gimmick span {
+		display: none;
+	}
+}
+
+@media (max-width: 768px), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+	.ui .btn {
+		background-size: 20px !important;
+	}
+	.ui .btn.gimmick {
+		background-image: url('../images/icon-touch@2x.png');
 	}
 }

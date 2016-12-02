@@ -104,7 +104,10 @@ export default class Controls {
 		let letter;
 		if (event.type === 'keyup') {
 			letter = keyMap.get(event.keyCode);
-		} else {
+		} else if (event.type === 'touchend' && !event.target.classList.contains('btn')) {
+			const key = getRandomInt(65, 91);
+			letter = keyMap.get(key);
+		} else if (event.type === 'click') {
 			const key = getRandomInt(65, 91);
 			letter = keyMap.get(key);
 		}
