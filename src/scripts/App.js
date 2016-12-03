@@ -6,6 +6,10 @@ export default class App {
 	constructor(el) {
 		this.el = el;
 
+		if ('ontouchstart' in window) {
+			document.body.classList.add('is-touch-device');
+		}
+
 		this.initLoader();
 	}
 

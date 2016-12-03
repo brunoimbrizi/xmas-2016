@@ -108,6 +108,10 @@ body {
 .ui .btn.gimmick {
 	background-image: url('../images/icon-gimmick.png');
 }
+.is-touch-device .ui .btn.gimmick {
+	background-image: url('../images/icon-touch.png');
+	transition: background-color 0.3s ease-in;
+}
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
 	.ui .btn.drums {
@@ -134,19 +138,24 @@ body {
 		background-image: url('../images/icon-audio-muted@2x.png');
 		background-size: 40px;
 	}
+
+	.is-touch-device .ui .btn.gimmick {
+		background-image: url('../images/icon-touch@2x.png');
+		background-size: 40px;
+	}
 }
 
 /* Mobile */
 @media (max-width: 768px) {
 	.ui .btn {
-		width: 40px;
-		height: 40px;
-		line-height: 40px;
-		background-size: 20px;
+		width: 20vw;
+		height: 20vw;
+		line-height: 20vw;
+		margin: 0 1vw;
+		background-size: 20vw;
 	}
 	.ui .btn.gimmick {
 		font-size: 12px;
-		background-image: url('../images/icon-touch.png');
 		transition: background-color 0.3s ease-in;
 	}
 	.ui .btn.gimmick.active {
@@ -156,14 +165,5 @@ body {
 	}
 	.ui .btn.gimmick span {
 		display: none;
-	}
-}
-
-@media (max-width: 768px), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-	.ui .btn {
-		background-size: 20px !important;
-	}
-	.ui .btn.gimmick {
-		background-image: url('../images/icon-touch@2x.png');
 	}
 }
