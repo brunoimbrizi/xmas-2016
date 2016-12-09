@@ -3,7 +3,7 @@ const glslify = require('glslify');
 import ManDeer from './mandeer/ManDeer';
 
 import NormalLines from './effects/NormalLines';
-import Discs from './effects/Discs';
+import Arrows from './effects/Arrows';
 
 export default class WebGLView {
 
@@ -18,7 +18,7 @@ export default class WebGLView {
 		this.initLights();
 		this.initManDeer();
 		this.initNormalLines();
-		this.initDiscs();
+		this.initArrows();
 	}
 
 	initThree() {
@@ -87,9 +87,9 @@ export default class WebGLView {
 		// this.scene.add(this.normalLines.object);
 	}
 
-	initDiscs() {
-		this.discs = new Discs(this.mandeer.object);
-		// this.scene.add(this.discs.object);
+	initArrows() {
+		this.arrows = new Arrows(this.mandeer);
+		this.scene.add(this.arrows.object);
 	}
 
 	// ---------------------------------------------------------------------------------------------
@@ -102,7 +102,7 @@ export default class WebGLView {
 		if (this.mandeer) {
 			this.mandeer.update(this.clock.getDelta());
 			this.normalLines.update();
-			this.discs.update();
+			this.arrows.update();
 		}
 
 		// const dot = this.face.normal.dot(this.camera.position.clone().normalize());
