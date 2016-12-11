@@ -66,13 +66,15 @@ export default class WebGLView {
 		// this.camera.add(lightA);
 		// this.scene.add(this.camera);
 
-		const lightB = new THREE.PointLight(0x0000FF);
-		lightB.position.set(300, 1, -100);
-		this.scene.add(lightB);
+		const lightB = new THREE.PointLight(0x790000);
+		lightB.position.set(300, 1, -150);
+		this.camera.add(lightB);
 
 		const lightC = new THREE.PointLight(0x00FFFF);
-		lightC.position.set(-300, 1, -100);
-		this.scene.add(lightC);
+		lightC.position.set(-300, 1, -240);
+		this.camera.add(lightC);
+
+		this.scene.add(this.camera);
 	}
 
 	initManDeer() {
