@@ -18,13 +18,15 @@ export default class ManDeer {
 		geometry.computeMorphNormals();
 
 		// const material = materials[0];
-		// const material = new THREE.MeshPhongMaterial();
-		const material = new THREE.MeshLambertMaterial();
+		// const material = new THREE.MeshBasicMaterial();
+		const material = new THREE.MeshPhongMaterial();
+		// const material = new THREE.MeshLambertMaterial();
 		// const material = new THREE.MeshNormalMaterial();
-		// material.color = new THREE.Color(0xffffff);
+		// material.color = new THREE.Color(0xE6335A);
+		// material.color = new THREE.Color(0x222222);
 		material.morphTargets = true;
 		material.morphNormals = true;
-		material.vertexColors = THREE.FaceColors;
+		// material.vertexColors = THREE.FaceColors;
 		// material.specular.setHSL(0, 0, 0.1);
 		// material.color.setHSL(0.6, 0, 0.6);
 		// material.shading = THREE.SmoothShading;

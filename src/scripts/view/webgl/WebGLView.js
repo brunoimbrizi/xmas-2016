@@ -60,17 +60,18 @@ export default class WebGLView {
 	}
 
 	initLights() {
-		const lightA = new THREE.DirectionalLight(0xFFFFFF);
+		const lightA = new THREE.DirectionalLight(0x222222);
 		lightA.position.set(0, 1, 0);
 		// this.scene.add(lightA);
 		// this.camera.add(lightA);
 		// this.scene.add(this.camera);
 
-		const lightB = new THREE.PointLight(0x790000);
+		const lightB = new THREE.PointLight(0xE6335A);
 		lightB.position.set(300, 1, -150);
 		this.camera.add(lightB);
 
-		const lightC = new THREE.PointLight(0x00FFFF);
+		const lightC = new THREE.PointLight(0xCCCCCC);
+		// const lightC = new THREE.PointLight(0x00FFFF);
 		lightC.position.set(-300, 1, -240);
 		this.camera.add(lightC);
 
