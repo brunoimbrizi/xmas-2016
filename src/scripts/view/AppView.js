@@ -63,5 +63,6 @@ export default class AppView {
 
 	start() {
 		this.ui.start();
+		this.ui.show();
 	}
 }

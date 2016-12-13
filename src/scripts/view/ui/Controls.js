@@ -130,4 +130,8 @@ export default class Controls {
 		this.gimmickButton.classList.add('active');
 		this.gimmickButtonSpan.innerText = letter;
 	}
+
+	show() {
+		this.element.classList.add('show');
+	}
 }
