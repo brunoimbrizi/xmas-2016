@@ -1,2 +1,6 @@
 node_modules/
 dist/scripts/main.js
+dist/sounds/_DS_Store
+*.ogg
+dist/sounds/gimmick/_DS_Store
+*.mp3
