@@ -82,7 +82,7 @@ export default class WebGLView {
 		this.mandeer = new ManDeer();
 		this.mandeer.object.position.y = -25;
 		this.scene.add(this.mandeer.object);
-		// this.scene.add(this.mandeer.helper);
+		// this.scene.add(this.mandeer.other);
 	}
 
 	initNormalLines() {
