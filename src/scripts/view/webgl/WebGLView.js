@@ -4,6 +4,7 @@ import ManDeer from './mandeer/ManDeer';
 
 import NormalLines from './effects/NormalLines';
 import Arrows from './effects/Arrows';
+import Dots from './effects/Dots';
 
 export default class WebGLView {
 
@@ -14,11 +15,12 @@ export default class WebGLView {
 
 		this.initThree();
 		this.initControls();
-		// this.initObject();
+		this.initObject();
 		this.initLights();
 		this.initManDeer();
-		this.initNormalLines();
-		this.initArrows();
+		// this.initNormalLines();
+		// this.initArrows();
+		this.initDots();
 	}
 
 	initThree() {
@@ -92,7 +94,12 @@ export default class WebGLView {
 
 	initArrows() {
 		this.arrows = new Arrows(this.mandeer);
-		this.scene.add(this.arrows.object);
+		// this.scene.add(this.arrows.object);
+	}
+
+	initDots() {
+		this.dots = new Dots(this.mandeer);
+		this.scene.add(this.dots.object);
 	}
 
 	// ---------------------------------------------------------------------------------------------
@@ -104,8 +111,9 @@ export default class WebGLView {
 
 		if (this.mandeer) {
 			this.mandeer.update(this.clock.getDelta());
-			this.normalLines.update();
-			this.arrows.update();
+			// this.normalLines.update();
+			// this.arrows.update();
+			this.dots.update();
 		}
 
 		// const dot = this.face.normal.dot(this.camera.position.clone().normalize());
