@@ -1,3 +1,4 @@
+import SimplexNoise from 'simplex-noise';
 const glslify = require('glslify');
 
 import { getCentroid } from '../../../util/geom';
@@ -12,6 +13,8 @@ export default class Dots {
 
 		this.numPoints = 100;
 		this.boundingBox = new THREE.Vector3(100, 200, 100);
+
+		this.simplex = new SimplexNoise();
 
 		this.initDots();
 	}
@@ -49,7 +52,8 @@ export default class Dots {
 		geometry.setIndex( new THREE.BufferAttribute( new Uint16Array( indices ), 1 ) );
 		*/
 
-		geometry.copy( new THREE.PlaneBufferGeometry( 1, 1 ) );
+		// geometry.copy( new THREE.PlaneBufferGeometry( 1, 1 ) );
+		geometry.copy( new THREE.CircleBufferGeometry( 1, 12 ) );
 
 		const vertices = this.target.object.geometry.vertices;
 		const faces = this.target.object.geometry.faces;
@@ -109,8 +113,10 @@ export default class Dots {
 		const offsets = this.object.geometry.attributes.offset.array;
 		const sizes = this.object.geometry.attributes.size.array;
 
+		const time = Date.now() * 0.001;
+
 		for ( let i = 0, i3 = 0; i < this.numPoints; i++, i3 += 3 ) {
-			// const noise = this.simplex.noise2D(time, i);
+			const noise = this.simplex.noise2D(time, i);
 
 			// vertices
 			const morphedVertex = getMorphedVertex(this.target.object, i);
@@ -120,6 +126,8 @@ export default class Dots {
 			offsets[ i3 + 0 ] = morphedVertex.x;
 			offsets[ i3 + 1 ] = morphedVertex.y;
 			offsets[ i3 + 2 ] = morphedVertex.z;
+
+			sizes[ i ] = noise * 0.2;
 
 			/*
 			// face centroids
@@ -135,6 +143,6 @@ export default class Dots {
 		}
 
 		this.object.geometry.attributes.offset.needsUpdate = true;
-		// this.object.geometry.attributes.size.needsUpdate = true;
+		this.object.geometry.attributes.size.needsUpdate = true;
 	}
 }

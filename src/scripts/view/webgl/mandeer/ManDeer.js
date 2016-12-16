@@ -41,10 +41,10 @@ export default class ManDeer {
 
 		material.morphTargets = true;
 		material.morphNormals = true;
-		// material.vertexColors = THREE.FaceColors;
+		material.vertexColors = THREE.FaceColors;
 		// material.specular.setHSL(0, 0, 0.1);
 		// material.color.setHSL(0.6, 0, 0.6);
-		// material.shading = THREE.SmoothShading;
+		material.shading = THREE.SmoothShading;
 		// material.shading = THREE.FlatShading;
 		// material.wireframe = true;
 

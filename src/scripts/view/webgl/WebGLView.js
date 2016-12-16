@@ -15,7 +15,7 @@ export default class WebGLView {
 
 		this.initThree();
 		this.initControls();
-		this.initObject();
+		// this.initObject();
 		this.initLights();
 		this.initManDeer();
 		// this.initNormalLines();
@@ -74,7 +74,7 @@ export default class WebGLView {
 
 		const lightC = new THREE.PointLight(0xCCCCCC);
 		// const lightC = new THREE.PointLight(0x00FFFF);
-		lightC.position.set(-300, 1, -240);
+		lightC.position.set(-100, 1, -240);
 		this.camera.add(lightC);
 
 		this.scene.add(this.camera);

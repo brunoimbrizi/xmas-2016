@@ -21,4 +21,5 @@ void main() {
 	gl_Position = projectionMatrix * mvPosition;
 
 	// gl_Position = projectionMatrix * modelViewMatrix * vec4( offset, 1.0 );
+	// gl_Position = projectionMatrix * modelViewMatrix * vec4( mvPosition );
 }
