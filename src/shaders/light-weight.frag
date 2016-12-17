@@ -44,5 +44,5 @@ void main() {
 	c += abs(sign(g - 1.0));
 
     gl_FragColor = vec4(vLightFront, 1.0) + color;
-    // gl_FragColor = vec4(vLightFront, 1.0) + red * c;
+    // gl_FragColor = red * c;
 }

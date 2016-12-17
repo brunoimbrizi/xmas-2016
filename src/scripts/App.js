@@ -11,6 +11,9 @@ export default class App {
 		}
 
 		this.initLoader();
+		this.initView();
+		this.initAudio();
+		this.initKnm();
 	}
 
 	initLoader() {
@@ -23,8 +26,9 @@ export default class App {
 
 		this.preloader.addEventListener('complete', (e) => {
 			// console.log('preloader', e);
-			this.initView();
-			this.initAudio();
+			document.querySelector('.info').classList.add('hide');
+			this.view.init();
+			this.audio.init();
 		});
 
 		this.preloader.loadManifest('data/manifest.json');
@@ -36,5 +40,29 @@ export default class App {
 
 	initAudio() {
 		this.audio = new AppAudio();
+	}
+
+	initKnm() {
+		this.knm = {};
+		this.knm.input = '';
+		this.knm.timeout = null;
+		this.knm.delay = 2000;
+		this.knm.active = false;
+
+		this.knm.keyup = this.onKeyUp.bind(this);
+		document.addEventListener('keyup', this.knm.keyup);
+	}
+
+	onKeyUp(e) {
+		this.knm.input += e.keyCode;
+		if (this.knm.input === '38384040373937396665') {
+			this.knm.active = !this.knm.active;
+			this.view.knm(this.knm.active);
+		}
+
+		clearTimeout(this.knm.timeout);
+		this.knm.timeout = setTimeout(() => {
+			this.knm.input = '';
+		}, this.knm.delay);
 	}
 }

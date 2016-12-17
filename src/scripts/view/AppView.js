@@ -1,5 +1,6 @@
 import Controls from './ui/Controls';
 import WebGLView from './webgl/WebGLView';
+import AppUI from './AppUI';
 
 export default class AppView {
 
@@ -22,8 +23,8 @@ export default class AppView {
 		this.sketch.setup = () => {
 			this.initWebGL();
 			this.initUI();
+			this.initDebugUI();
 
-			this.start();
 		};
 
 		this.sketch.update = () => {
@@ -52,6 +53,12 @@ export default class AppView {
 		};
 	}
 
+	// assets loaded
+	init() {
+		this.start();
+		this.webGL.init();
+	}
+
 	initWebGL() {
 		document.querySelector('.main').appendChild(this.renderer.domElement);
 		this.webGL = new WebGLView(this);
@@ -63,6 +70,10 @@ export default class AppView {
 		this.ui.on('controls:playGimmick', this.onControlsInteraction.bind(this));
 	}
 
+	initDebugUI() {
+		this.debugUI = new AppUI(this);
+	}
+
 	start() {
 		this.ui.start();
 		this.ui.show();
@@ -71,5 +82,9 @@ export default class AppView {
 	onControlsInteraction(e) {
 		if (this.interacted) return;
 		this.interacted = this.webGL.dance();
+	}
+
+	knm(active) {
+		this.webGL.knm(active);
 	}
 }

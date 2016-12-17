@@ -17,10 +17,25 @@ export default class WebGLView {
 		this.initControls();
 		// this.initObject();
 		this.initLights();
+		this.initFloor();
+	}
+
+	init() {
 		this.initManDeer();
 		// this.initNormalLines();
 		// this.initArrows();
 		// this.initDots();
+
+		// show
+		const time = 2;
+		const ease = Expo.easeInOut;
+
+		TweenMax.to(this.camera.position, time * 2, { x: -98.30, y: -5.20, z: -20.20, ease, onComplete: () => {
+			this.controls.enabled = true;
+			document.querySelector('.info').classList.add('none');
+		} });
+		TweenMax.to(this.camera.rotation, time, { x: 2.88, y: -1.35, z: -2.90, ease });
+		TweenMax.to(this.camera.up, time, { x: 0, y: 1, z: 0, ease });
 	}
 
 	initThree() {
@@ -29,10 +44,13 @@ export default class WebGLView {
 
 		// camera
 		this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
-		// this.camera.position.z = 140;
-		this.camera.position.set(-98.30, -5.21, -20.20);
-		this.camera.rotation.set(2.88, -1.36, 2.88);
-		this.camera.up.set(-0.053, 0.998, 0.001);
+		// this.camera.position.set(-98.30, -5.21, -20.20);
+		// this.camera.rotation.set(2.88, -1.36, 2.88);
+		// this.camera.up.set(-0.053, 0.998, 0.001);
+
+		this.camera.position.set(0, 300, 0);
+		this.camera.rotation.set(-HALF_PI, 0, -HALF_PI);
+		this.camera.up.set(1, 0, 0);
 	}
 
 	initControls() {
@@ -45,8 +63,8 @@ export default class WebGLView {
 		this.controls.noPan = true;
 		this.controls.staticMoving = false;
 		this.controls.dynamicDampingFactor = 0.15;
-		this.controls.maxDistance = 1000;
-		this.controls.enabled = true;
+		this.controls.maxDistance = 300;
+		this.controls.enabled = false;
 	}
 
 	initObject() {
@@ -77,8 +95,17 @@ export default class WebGLView {
 
 		// const lightC = new THREE.PointLight(0xCCCCCC);
 		const lightC = new THREE.PointLight(0x00FFFF, 0.4);
-		lightC.position.set(-100, 1, -240);
+		lightC.position.set(-120, -30, -220);
 		this.camera.add(lightC);
+
+		const lightD = new THREE.PointLight(0xCCCC00, 0.4);
+		lightD.position.set(50, 0, -150);
+		lightD.visible = false;
+		this.camera.add(lightD);
+
+		this.lightB = lightB;
+		this.lightC = lightC;
+		this.lightD = lightD;
 
 		this.scene.add(this.camera);
 	}
@@ -90,6 +117,15 @@ export default class WebGLView {
 		// this.scene.add(this.mandeer.helper);
 
 		this.mandeer.object.material.needsUpdate = true;
+	}
+
+	initFloor() {
+		const geometry = new THREE.CircleBufferGeometry(500, 32);
+		const material = new THREE.MeshLambertMaterial({ color:0xFFFFFF, wireframe: false });
+		this.floor = new THREE.Mesh(geometry, material);
+		this.floor.rotation.x = -HALF_PI;
+		this.floor.position.y = -24;
+		this.scene.add(this.floor);
 	}
 
 	initNormalLines() {
@@ -139,6 +175,10 @@ export default class WebGLView {
 		}
 
 		return false;
+	}
+
+	knm(active) {
+		this.lightD.visible = active;
 	}
 
 	// ---------------------------------------------------------------------------------------------

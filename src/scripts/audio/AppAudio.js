@@ -14,9 +14,6 @@ export default class AppAudio {
 			this.muted = true;
 		}
 
-		// start ticking
-		raf(this.update.bind(this));
-
 		// pause/resume with page visibility
 		visibly.onHidden(() => {
 			this.wasMuted = this.muted;
@@ -26,6 +23,11 @@ export default class AppAudio {
 		visibly.onVisible(() => {
 			if (!this.wasMuted) this.unmute();
 		});
+	}
+
+	init() {
+		// start ticking
+		raf(this.update.bind(this));
 	}
 
 	getPlayer(name) {
