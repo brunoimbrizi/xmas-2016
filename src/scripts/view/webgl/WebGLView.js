@@ -72,8 +72,8 @@ export default class WebGLView {
 		lightB.position.set(300, 1, -150);
 		this.camera.add(lightB);
 
-		const lightC = new THREE.PointLight(0xCCCCCC);
-		// const lightC = new THREE.PointLight(0x00FFFF);
+		// const lightC = new THREE.PointLight(0xCCCCCC);
+		const lightC = new THREE.PointLight(0x00FFFF);
 		lightC.position.set(-100, 1, -240);
 		this.camera.add(lightC);
 
@@ -85,6 +85,8 @@ export default class WebGLView {
 		this.mandeer.object.position.y = -25;
 		this.scene.add(this.mandeer.object);
 		// this.scene.add(this.mandeer.helper);
+
+		this.mandeer.object.material.needsUpdate = true;
 	}
 
 	initNormalLines() {

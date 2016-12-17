@@ -22,26 +22,29 @@ export default class ManDeer {
 
 		// const material = materials[0];
 		// const material = new THREE.MeshBasicMaterial();
-		const material = new THREE.MeshPhongMaterial();
+		// const material = new THREE.MeshPhongMaterial();
 		// const material = new THREE.MeshLambertMaterial();
 		// const material = new THREE.MeshNormalMaterial();
 		// material.color = new THREE.Color(0xE6335A);
 		// material.color = new THREE.Color(0x222222);
 
-		/*
+		const uniforms = {
+			directionalLightPos: { value: new THREE.Vector3(1, 0, 1) },
+			directionalLightColor: { value: new THREE.Color(0xFFFFFF) },
+		};
+		
 		const material = new THREE.ShaderMaterial({
-			uniforms: {
-				directionalLightPos: { value: new THREE.Vector3(1, 0, 1) },
-				directionalLightColor: { value: new THREE.Color(0xFFFFFF) },
-			},
+			uniforms: THREE.UniformsUtils.merge([ THREE.UniformsLib['lights'], uniforms ]),
 			vertexShader: glslify('../../../../shaders/light-weight.vert'),
 			fragmentShader: glslify('../../../../shaders/light-weight.frag'),
+			extensions: { derivatives: true },
+			lights: true,
 		});
-		*/
+		
 
 		material.morphTargets = true;
 		material.morphNormals = true;
-		material.vertexColors = THREE.FaceColors;
+		// material.vertexColors = THREE.FaceColors;
 		// material.specular.setHSL(0, 0, 0.1);
 		// material.color.setHSL(0.6, 0, 0.6);
 		material.shading = THREE.SmoothShading;

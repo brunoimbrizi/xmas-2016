@@ -2,6 +2,7 @@
 
 varying vec2 vUv;
 varying vec3 vNormal;
+varying vec3 vPos;
 
 #ifdef USE_MORPHTARGETS
 
@@ -20,7 +21,6 @@ varying vec3 vNormal;
 void main() {
 	vUv = uv;
 	vNormal = normalize( normalMatrix * normal );
-
 
 	vec3 transformed = vec3( position );
 
@@ -42,6 +42,7 @@ void main() {
 
 	#endif
 
+	vPos = vec3( transformed );
 
 	// gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
 	gl_Position = projectionMatrix * modelViewMatrix * vec4( transformed, 1.0 );
