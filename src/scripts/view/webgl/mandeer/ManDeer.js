@@ -6,7 +6,7 @@ export default class ManDeer {
 		this.scale = 30;
 
 		this.initMorphedMesh();
-		// this.initMaterialTest();
+		// this.initSkinnedMesh();
 	}
 
 	initMorphedMesh() {
@@ -52,33 +52,51 @@ export default class ManDeer {
 		this.object.scale.set(this.scale, this.scale, this.scale);
 
 		this.mixer = new THREE.AnimationMixer(this.object);
-		this.mixer.clipAction(this.object.geometry.animations[0]).setDuration(4.0).play();
+		this.actionDance = this.mixer.clipAction(this.object.geometry.animations[0]);
+		this.actionNod = this.mixer.clipAction(this.object.geometry.animations[1]);
+		// this.mixer.clipAction(this.object.geometry.animations[0]).setDuration(4.0).play();
 
-		// this.helper = new THREE.SkeletonHelper(this.object);
-		// this.helper.material.linewidth = 3;
-		// });
+		// this.actionDance.setDuration(4.0).play();
+		this.actionNod.setDuration(1.0).play();
+
 	}
 
-	initMaterialTest() {
-		// const geometry = new THREE.TorusGeometry(200, 200, 200);
-		// const geometry = new THREE.PlaneGeometry(400, 400, 20, 20);
+	initSkinnedMesh() {
+		const loader = new THREE.JSONLoader();
 
-		// const material = new THREE.ShaderMaterial({
-		// 	uniforms: {
-		// 		directionalLightPos: { value: new THREE.Vector3(0, 0, 1) },
-		// 		directionalLightColor: { value: new THREE.Color(0xFFFFFF) },
-		// 	},
-		// 	vertexShader: glslify('../../../../shaders/light-weight.vert'),
-		// 	fragmentShader: glslify('../../../../shaders/light-weight.frag'),
+		// loader.load('models/man-deer-08.json', (geometry, materials) => {
+		const obj = loader.parse(app.preloader.getResult('model'));
+		const geometry = obj.geometry;
+
+		// const material = materials[0];
+		const material = new THREE.MeshPhongMaterial();
+		// const material = new THREE.MeshBasicMaterial();
+		material.skinning = true;
+		material.specular.setHSL(0, 0, 0.1);
+		material.color.setHSL(0.6, 0, 0.6);
+		material.shading = THREE.FlatShading;
+		// material.wireframe = true;
+
+		this.object = new THREE.SkinnedMesh(geometry, material);
+		this.object.scale.set(this.scale, this.scale, this.scale);
+
+		this.mixer = new THREE.AnimationMixer(this.object);
+		this.mixer.clipAction(this.object.geometry.animations[0]).play();
+
+		this.helper = new THREE.SkeletonHelper(this.object);
+		this.helper.material.linewidth = 3;
 		// });
-
-		// this.other = new THREE.Mesh(geometry, material);
 	}
 
 	update(delta) {
-		// this.object.updateMatrixWorld();
+		this.object.updateMatrixWorld();
 		this.mixer.update(delta);
 		// this.helper.update();
+	}
+
+	dance() {
+		this.actionNod.stop();
+		this.actionDance.setDuration(4.0).play();
 	}
 
 }

@@ -14,7 +14,7 @@ export default class AppView {
 			type: Sketch.WEBGL,
 			element: this.renderer.domElement,
 			context: this.renderer.context,
-			autopause: true,
+			autopause: false,
 			retina: (window.devicePixelRatio >= 2),
 			fullscreen: true
 		});
@@ -59,10 +59,17 @@ export default class AppView {
 
 	initUI() {
 		this.ui = new Controls(document.querySelector('.ui'));
+		this.ui.on('controls:toggleTrack', this.onControlsInteraction.bind(this));
+		this.ui.on('controls:playGimmick', this.onControlsInteraction.bind(this));
 	}
 
 	start() {
 		this.ui.start();
 		this.ui.show();
+	}
+
+	onControlsInteraction(e) {
+		if (this.interacted) return;
+		this.interacted = this.webGL.dance();
 	}
 }

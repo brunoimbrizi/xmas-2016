@@ -1,10 +1,13 @@
+import EventEmitter from 'events';
+
 import keyMap from '../../util/keyMap';
 import { getRandomInt } from '../../util/math';
 
 const REF_TRACK = 'drums-o';
 
-export default class Controls {
+export default class Controls extends EventEmitter {
 	constructor(element) {
+		super();
 		this.element = element;
 
 		this.tracks = new Map()
@@ -59,6 +62,8 @@ export default class Controls {
 	}
 
 	toggleTrack(param) {
+		this.emit('controls:toggleTrack');
+
 		let trackId;
 		if (typeof param === 'string') {
 			trackId = param;
@@ -101,6 +106,8 @@ export default class Controls {
 	}
 
 	playGimmick(event) {
+		this.emit('controls:playGimmick');
+
 		let letter;
 		if (event.type === 'keyup') {
 			letter = keyMap.get(event.keyCode);

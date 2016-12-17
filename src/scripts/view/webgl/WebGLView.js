@@ -20,7 +20,7 @@ export default class WebGLView {
 		this.initManDeer();
 		// this.initNormalLines();
 		// this.initArrows();
-		this.initDots();
+		// this.initDots();
 	}
 
 	initThree() {
@@ -84,7 +84,7 @@ export default class WebGLView {
 		this.mandeer = new ManDeer();
 		this.mandeer.object.position.y = -25;
 		this.scene.add(this.mandeer.object);
-		// this.scene.add(this.mandeer.other);
+		// this.scene.add(this.mandeer.helper);
 	}
 
 	initNormalLines() {
@@ -99,7 +99,7 @@ export default class WebGLView {
 
 	initDots() {
 		this.dots = new Dots(this.mandeer);
-		this.scene.add(this.dots.object);
+		// this.scene.add(this.dots.object);
 	}
 
 	// ---------------------------------------------------------------------------------------------
@@ -113,7 +113,7 @@ export default class WebGLView {
 			this.mandeer.update(this.clock.getDelta());
 			// this.normalLines.update();
 			// this.arrows.update();
-			this.dots.update();
+			// this.dots.update();
 		}
 
 		// const dot = this.face.normal.dot(this.camera.position.clone().normalize());
@@ -122,6 +122,15 @@ export default class WebGLView {
 
 	draw() {
 		this.renderer.render(this.scene, this.camera);
+	}
+
+	dance() {
+		if (this.mandeer) {
+			this.mandeer.dance();
+			return true;
+		}
+
+		return false;
 	}
 
 	// ---------------------------------------------------------------------------------------------
