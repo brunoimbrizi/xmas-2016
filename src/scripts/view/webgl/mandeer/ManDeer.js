@@ -63,7 +63,7 @@ export default class ManDeer {
 		// this.mixer.clipAction(this.object.geometry.animations[0]).setDuration(4.0).play();
 
 		// this.actionDance.setDuration(4.0).play();
-		this.actionNod.setDuration(0.96).play();
+		this.actionNod.setDuration(1.0).play();
 
 	}
 

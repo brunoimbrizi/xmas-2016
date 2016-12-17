@@ -42,10 +42,10 @@ export default class WebGLView {
 		this.controls.zoomSpeed = 0.8;
 		this.controls.panSpeed = 0.8;
 		this.controls.noZoom = false;
-		this.controls.noPan = false;
+		this.controls.noPan = true;
 		this.controls.staticMoving = false;
 		this.controls.dynamicDampingFactor = 0.15;
-		this.controls.maxDistance = 3000;
+		this.controls.maxDistance = 1000;
 		this.controls.enabled = true;
 	}
 
@@ -72,7 +72,7 @@ export default class WebGLView {
 		// this.scene.add(this.camera);
 
 		const lightB = new THREE.PointLight(0xE6335A, 0.4);
-		lightB.position.set(300, 1, -250);
+		lightB.position.set(300, 1, -150);
 		this.camera.add(lightB);
 
 		// const lightC = new THREE.PointLight(0xCCCCCC);

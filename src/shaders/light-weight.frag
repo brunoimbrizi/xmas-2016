@@ -43,6 +43,6 @@ void main() {
 	// http://theorangeduck.com/page/avoiding-shader-conditionals
 	c += abs(sign(g - 1.0));
 
-	// gl_FragColor = color * c;
     gl_FragColor = vec4(vLightFront, 1.0) + color;
+    // gl_FragColor = vec4(vLightFront, 1.0) + red * c;
 }
