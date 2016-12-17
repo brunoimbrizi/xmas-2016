@@ -2,7 +2,8 @@ const glslify = require('glslify');
 
 export default class ManDeer {
 
-	constructor() {
+	constructor(view) {
+		this.view = view;
 		this.scale = 30;
 
 		this.initMorphedMesh();
@@ -31,7 +32,9 @@ export default class ManDeer {
 		const uniforms = {
 			directionalLightPos: { value: new THREE.Vector3(1, 0, 1) },
 			directionalLightColor: { value: new THREE.Color(0xFFFFFF) },
+			cameraPos: { value: this.view.camera.position },
 		};
+		
 		
 		const material = new THREE.ShaderMaterial({
 			uniforms: THREE.UniformsUtils.merge([ THREE.UniformsLib['lights'], uniforms ]),
@@ -40,14 +43,14 @@ export default class ManDeer {
 			extensions: { derivatives: true },
 			lights: true,
 		});
-		
+
 
 		material.morphTargets = true;
 		material.morphNormals = true;
 		// material.vertexColors = THREE.FaceColors;
 		// material.specular.setHSL(0, 0, 0.1);
 		// material.color.setHSL(0.6, 0, 0.6);
-		material.shading = THREE.SmoothShading;
+		// material.shading = THREE.SmoothShading;
 		// material.shading = THREE.FlatShading;
 		// material.wireframe = true;
 
@@ -60,7 +63,7 @@ export default class ManDeer {
 		// this.mixer.clipAction(this.object.geometry.animations[0]).setDuration(4.0).play();
 
 		// this.actionDance.setDuration(4.0).play();
-		this.actionNod.setDuration(1.0).play();
+		this.actionNod.setDuration(0.96).play();
 
 	}
 
@@ -95,6 +98,8 @@ export default class ManDeer {
 		this.object.updateMatrixWorld();
 		this.mixer.update(delta);
 		// this.helper.update();
+
+		// this.object.material.uniforms.cameraPos.value = this.view.camera.position;
 	}
 
 	dance() {

@@ -29,7 +29,10 @@ export default class WebGLView {
 
 		// camera
 		this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
-		this.camera.position.z = 140;
+		// this.camera.position.z = 140;
+		this.camera.position.set(-98.30, -5.21, -20.20);
+		this.camera.rotation.set(2.88, -1.36, 2.88);
+		this.camera.up.set(-0.053, 0.998, 0.001);
 	}
 
 	initControls() {
@@ -68,12 +71,12 @@ export default class WebGLView {
 		// this.camera.add(lightA);
 		// this.scene.add(this.camera);
 
-		const lightB = new THREE.PointLight(0xE6335A);
-		lightB.position.set(300, 1, -150);
+		const lightB = new THREE.PointLight(0xE6335A, 0.4);
+		lightB.position.set(300, 1, -250);
 		this.camera.add(lightB);
 
 		// const lightC = new THREE.PointLight(0xCCCCCC);
-		const lightC = new THREE.PointLight(0x00FFFF);
+		const lightC = new THREE.PointLight(0x00FFFF, 0.4);
 		lightC.position.set(-100, 1, -240);
 		this.camera.add(lightC);
 
@@ -81,7 +84,7 @@ export default class WebGLView {
 	}
 
 	initManDeer() {
-		this.mandeer = new ManDeer();
+		this.mandeer = new ManDeer(this);
 		this.mandeer.object.position.y = -25;
 		this.scene.add(this.mandeer.object);
 		// this.scene.add(this.mandeer.helper);
@@ -117,6 +120,9 @@ export default class WebGLView {
 			// this.arrows.update();
 			// this.dots.update();
 		}
+
+		// const time = Date.now() * 0.001;
+		// this.camera.children[1].position.x = sin(time) * 300;
 
 		// const dot = this.face.normal.dot(this.camera.position.clone().normalize());
 		// this.line.material.opacity = dot;
