@@ -33,6 +33,7 @@
 	--easeInOutBack  : cubic-bezier(0.680, -0.550, 0.265, 1.550);
 }
 
+/* GLOBAL */
 body {
 	margin: 0;
 	overflow: hidden;
@@ -44,6 +45,7 @@ body {
 	-webkit-tap-highlight-color: transparent;
 }
 
+/* UI */
 .ui {
 	pointer-events: none;
 	position: absolute;
@@ -62,44 +64,107 @@ body {
 	text-align: center;
 }
 
+/* BTN */
 .ui .btn {
 	cursor: pointer;
 	display: inline-block;
 	position: relative;
-	width: 80px;
+	width: 100px;
 	height: 80px;
-	margin: 0 10px;
+	margin: 0 6px;
 	border-radius: 2px;
-	background-color: rgba(0, 0, 0, 0.2);
-	background-repeat: no-repeat;
-	background-position: center center;
-	background-size: 40px;
+	background-color: rgba(30, 30, 30, 0.4);
 	transition: all 0.3s;
 }
 .ui .btn svg {
 	pointer-events: none;
 	position: absolute;
 	top: 20px;
-	left: 20px;
+	left: 30px;
 	width: 40px;
 	height: 40px;
+	transform: scale(0.5);
 }
 
+/* BTN modifier */
+.ui .btn:hover {
+	background-color: rgba(30, 30, 30, 0.8);
+}
 .ui .btn:active {
-	background-color: rgba(0, 0, 0, 0.3);
+	background-color: rgba(30, 30, 30, 0.4);
+}
+.ui .btn.xmas {
+	background-color: rgba(205, 25, 65, 0.7);
+}
+.ui .btn.gimmick svg {
+	top: 24px;
+	transition: opacity 0.3s 0.1s var(--easeInOutQuad);
+}
+.ui .btn.gimmick {
+	position: relative;
+	color: #fff;
+	text-align: center;
+	text-transform: uppercase;
+	font-family: 'Arial', Helvetica, sans-serif;
+	font-size: 24px;
+	letter-spacing: 1px;
+}
+.ui .btn.gimmick span {
+	display: inline-block;
+	position: absolute;
+	top: 26px;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	opacity: 0;
+	transition: opacity 0.3s var(--easeInOutQuad);
+}
+.ui .btn.gimmick .gimmick-touch {
+	display: none;
+}
+.ui .btn.mute {
+	pointer-events: auto;
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	width: 40px;
+	height: 40px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-image: url('../images/icon-audio-playing.png');
+}
+.ui .btn.mute.muted {
+	background-image: url('../images/icon-audio-muted.png');
 }
 
-/*
-	ANIMATIONS
- */
+.ui .btn.gimmick.active {
+	background-color: rgba(205, 25, 65, 0.7);
+}
+.ui .btn.gimmick.active span {
+	opacity: 1;
+	transition: opacity 0.1s 0.1s var(--easeInOutQuad);
+}
+.ui.show .btn.gimmick.active svg rect {
+	opacity: 0;
+	transition: opacity 0.3s var(--easeInOutQuad);
+}
+.is-touch-device .ui .btn.gimmick svg *:not(.gimmick-touch) {
+	display: none;
+}
+.is-touch-device .ui .btn.gimmick .gimmick-touch {
+	display: block;
+}
+
+/* BTN ANIMATIONS */
 /* icon-drums */
-.ui .btn.drums {
+.ui .btn.drums circle {
+	transform-origin: 50% 50%;
 	transform: scale(0.2);
 	transition: all 0.3s var(--easeInOutQuad);
 }
-.ui.show .btn.drums {
+.ui.show .btn.drums circle {
 	transform: scale(1);
-	transition: all 0.3s var(--easeInOutQuad);
+	transition: all 0.3s 0.5s var(--easeInOutQuad);
 }
 /* icon-bass */
 .ui .btn.bass line:nth-of-type(1) {
@@ -109,7 +174,7 @@ body {
 }
 .ui.show .btn.bass line:nth-of-type(1) {
 	transform: scaleY(1);
-	transition: all 0.3s 0.3s var(--easeInOutQuad);
+	transition: all 0.3s 1.0s var(--easeInOutQuad);
 }
 .ui .btn.bass line:nth-of-type(2) {
 	transform-origin: 100% 50%;
@@ -118,7 +183,7 @@ body {
 }
 .ui.show .btn.bass line:nth-of-type(2) {
 	transform: rotate(0);
-	transition: all 0.3s 0.3s var(--easeInOutQuad);
+	transition: all 0.3s 1.0s var(--easeInOutQuad);
 }
 .ui .btn.bass line:nth-of-type(3) {
 	transform-origin: 100% 50%;
@@ -127,7 +192,7 @@ body {
 }
 .ui.show .btn.bass line:nth-of-type(3) {
 	transform: rotate(0);
-	transition: all 0.3s 0.3s var(--easeInOutQuad);
+	transition: all 0.3s 1.0s var(--easeInOutQuad);
 }
 /* icon-key */
 .ui .btn.key line:nth-of-type(1) {
@@ -137,7 +202,7 @@ body {
 }
 .ui.show .btn.key line:nth-of-type(1) {
 	transform: scaleY(1);
-	transition: all 0.3s 0.6s var(--easeInOutQuad);
+	transition: all 0.3s 1.5s var(--easeInOutQuad);
 }
 .ui .btn.key line:nth-of-type(2) {
 	transform-origin: 50% 50%;
@@ -146,7 +211,7 @@ body {
 }
 .ui.show .btn.key line:nth-of-type(2) {
 	transform: scaleY(1);
-	transition: all 0.3s 0.6s var(--easeInOutQuad);
+	transition: all 0.3s 1.5s var(--easeInOutQuad);
 }
 .ui .btn.key line:nth-of-type(3) {
 	transform-origin: 50% 50%;
@@ -155,7 +220,7 @@ body {
 }
 .ui.show .btn.key line:nth-of-type(3) {
 	transform: scaleY(1);
-	transition: all 0.3s 0.6s var(--easeInOutQuad);
+	transition: all 0.3s 1.5s var(--easeInOutQuad);
 }
 /* icon-gimmick */
 .ui.show .btn.gimmick rect {
@@ -170,7 +235,7 @@ body {
 	transition: all 0.3s var(--easeInOutQuad);
 }
 .ui.show .btn.gimmick rect:nth-of-type(1) {
-	animation-delay: 0.9s;
+	animation-delay: 2.0s;
 }
 .ui .btn.gimmick rect:nth-of-type(2) {
 	transform-origin: 50% 50%;
@@ -178,7 +243,7 @@ body {
 	transition: all 0.3s var(--easeInOutQuad);
 }
 .ui.show .btn.gimmick rect:nth-of-type(2) {
-	animation-delay: 0.95s;
+	animation-delay: 2.05s;
 }
 .ui .btn.gimmick rect:nth-of-type(3) {
 	transform-origin: 50% 50%;
@@ -186,7 +251,7 @@ body {
 	transition: all 0.3s var(--easeInOutQuad);
 }
 .ui.show .btn.gimmick rect:nth-of-type(3) {
-	animation-delay: 1.0s;
+	animation-delay: 2.1s;
 }
 .ui .btn.gimmick rect:nth-of-type(4) {
 	transform-origin: 50% 50%;
@@ -194,7 +259,7 @@ body {
 	transition: all 0.3s var(--easeInOutQuad);
 }
 .ui.show .btn.gimmick rect:nth-of-type(4) {
-	animation-delay: 1.05s;
+	animation-delay: 2.15s;
 }
 .ui .btn.gimmick rect:nth-of-type(5) {
 	transform-origin: 50% 50%;
@@ -202,79 +267,19 @@ body {
 	transition: all 0.3s var(--easeInOutQuad);
 }
 .ui.show .btn.gimmick rect:nth-of-type(5) {
-	animation-delay: 1.1s;
+	animation-delay: 2.2s;
+}
+.ui .btn.gimmick circle {
+	transform-origin: 50% 50%;
+	transform: scale(0.2);
+	transition: all 0.3s var(--easeInOutQuad);
+}
+.ui.show .btn.gimmick circle {
+	transform: scale(1);
+	transition: all 0.3s 2.0s var(--easeInOutQuad);
 }
 
-.ui .btn.xmas {
-	background-color: #f53d48;
-}
-
-/* Gimmick */
-.ui .btn.gimmick {
-	position: relative;
-	color: #fff;
-	text-align: center;
-	text-transform: uppercase;
-	font-family: 'Arial', Helvetica, sans-serif;
-	font-size: 12px;
-	letter-spacing: 1px;
-}
-.ui .btn.gimmick {
-	background-position: 50% 50%;
-	transition: background-position 0.3s ease-out;
-}
-.ui .btn.gimmick.active {
-	background-color: #f53d48;
-}
-.ui .btn.gimmick.active rect:nth-of-type(4) {
-	transform: scale(1) translateX(-13px) !important;
-	transition: transform 0.3s var(--easeInOutQuad);
-}
-.ui .btn.gimmick.active rect:nth-of-type(5) {
-	transform: scale(1) translateX(-13px) !important;
-	transition: transform 0.3s var(--easeInOutQuad);
-}
-.ui.show .btn.gimmick.active rect:nth-of-type(3) {
-	opacity: 0;
-	transition: opacity 0.3s var(--easeInOutQuad);
-}
-.ui .btn.gimmick span {
-	display: inline-block;
-	position: absolute;
-	top: 26px;
-	right: 15px;
-	width: 20px;
-	text-align: center;
-	opacity: 0;
-	transition: opacity 0.3s ease-out;
-}
-.ui .btn.gimmick.active span {
-	opacity: 1;
-	transition: opacity 0.1s ease-in;
-}
-
-/* Controls */
-.ui .btn.mute {
-	pointer-events: auto;
-	position: absolute;
-	top: 20px;
-	right: 20px;
-	background-color: transparent;
-	background-image: url('../images/icon-audio-playing.png');
-}
-.ui .btn.mute.muted {
-	background-image: url('../images/icon-audio-muted.png');
-}
-
-
-.is-touch-device .ui .btn.gimmick svg {
-	display: none;
-}
-.is-touch-device .ui .btn.gimmick {
-	background-image: url('../images/icon-touch.png');
-	transition: background-color 0.3s ease-in;
-}
-
+/* Retina */
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
 	.ui .btn.mute {
 		background-image: url('../images/icon-audio-playing@2x.png');
@@ -286,8 +291,7 @@ body {
 	}
 
 	.is-touch-device .ui .btn.gimmick {
-		background-image: url('../images/icon-touch@2x.png');
-		background-size: 40px;
+
 	}
 }
 
@@ -303,12 +307,12 @@ body {
 		top: calc(50% - 20px);
 		left: calc(50% - 20px);
 	}
+	.ui .btn.gimmick svg {
+		top: calc(50% - 20px);
+	}
 	.ui .btn.gimmick {
-		font-size: 12px;
-		transition: background-color 0.3s ease-in;
 	}
 	.ui .btn.gimmick.active {
-		background-position: 50% 50%;
 	}
 	.ui .btn.gimmick span {
 		display: none;
