@@ -2,6 +2,10 @@ import raf from 'raf';
 require('visibly.js');
 
 export default class AppAudio {
+
+	get FFT_SIZE() { return 512; }
+	get BINS() { return 128; }
+
 	constructor() {
 		this.playing = new Map();
 		this.muted = false;
@@ -9,6 +13,8 @@ export default class AppAudio {
 		// check initial state of the AudioContext
 		createjs.Sound.initializeDefaultPlugins();
 		createjs.Sound.alternateExtensions = ['mp3'];
+
+		this.initAnalyser();
 
 		if (createjs.Sound.activePlugin.context.state === 'suspended') {
 			this.muted = true;
@@ -28,6 +34,23 @@ export default class AppAudio {
 	init() {
 		// start ticking
 		raf(this.update.bind(this));
+	}
+
+	initAnalyser() {
+		const context = createjs.Sound.activePlugin.context;
+
+		// create an analyser node
+		this.analyserNode = context.createAnalyser();
+		this.analyserNode.fftSize = this.FFT_SIZE;
+		this.analyserNode.smoothingTimeConstant = 0.85;
+		this.analyserNode.connect(context.destination);
+
+		// attach visualizer node to our existing dynamicsCompressorNode, which was connected to context.destination
+		const dynamicsNode = createjs.Sound.activePlugin.dynamicsCompressorNode;
+		dynamicsNode.disconnect();  // disconnect from destination
+		dynamicsNode.connect(this.analyserNode);
+
+		this.values = [];
 	}
 
 	getPlayer(name) {
@@ -105,6 +128,26 @@ export default class AppAudio {
 				this.play(player.name, { startAt: loopTo + diff, loopTo: loopTo }, this.playing.get(player.name).volume);
 				player.loopAt = 0;
 			}
+		}
+
+		// analyser
+		const freqData = new Uint8Array(this.analyserNode.frequencyBinCount);
+		this.analyserNode.getByteFrequencyData(freqData);
+		const length = freqData.length;
+
+		const bin = Math.ceil(length / this.BINS);
+		for (let i = 0; i < this.BINS; i++) {
+			let sum = 0;
+			for (let j = 0; j < bin; j++) {
+				sum += freqData[(i * bin) + j];
+			}
+
+			// Calculate the average frequency of the samples in the bin
+			const average = sum / bin;
+
+			// Divide by number of bins to normalize
+			// this.values[i] = (average / this.BINS) / this.playbackRate;
+			this.values[i] = (average / this.BINS);
 		}
 
 		raf(this.update.bind(this));

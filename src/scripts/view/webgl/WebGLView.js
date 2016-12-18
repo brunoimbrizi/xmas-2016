@@ -91,6 +91,7 @@ export default class WebGLView {
 
 		const lightB = new THREE.PointLight(0xE6335A, 0.4);
 		lightB.position.set(300, 1, -150);
+		lightB.iniPosition = lightB.position.clone();
 		this.camera.add(lightB);
 
 		// const lightC = new THREE.PointLight(0xCCCCCC);
@@ -157,11 +158,7 @@ export default class WebGLView {
 			// this.dots.update();
 		}
 
-		// const time = Date.now() * 0.001;
-		// this.camera.children[1].position.x = sin(time) * 300;
-
-		// const dot = this.face.normal.dot(this.camera.position.clone().normalize());
-		// this.line.material.opacity = dot;
+		this.lightB.position.z = app.audio.values[10] * this.lightB.iniPosition.z;
 	}
 
 	draw() {
