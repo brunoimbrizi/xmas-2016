@@ -34,7 +34,6 @@ export default class Controls extends EventEmitter {
 		this.muteButton.addEventListener('click', this.mute.bind(this));
 
 		document.addEventListener('keyup', this.playGimmick.bind(this));
-		document.addEventListener('touchend', this.playGimmick.bind(this));
 
 		for (const track of this.tracks.values()) {
 			track.element.addEventListener('click', this.toggleTrack.bind(this));
@@ -111,12 +110,8 @@ export default class Controls extends EventEmitter {
 		let letter;
 		if (event.type === 'keyup') {
 			letter = keyMap.get(event.keyCode);
-		} else if (event.type === 'touchend' && !event.target.classList.contains('btn')) {
-			const key = getRandomInt(65, 91);
-			letter = keyMap.get(key);
 		} else if (event.type === 'click') {
-			const key = getRandomInt(65, 91);
-			letter = keyMap.get(key);
+			letter = keyMap.get(getRandomInt(65, 91));
 		}
 		if (!letter) return;
 
