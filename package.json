@@ -4,6 +4,7 @@
   "author": "Bruno Imbrizi",
   "dependencies": {
     "babel-polyfill": "^6.7.4",
+    "bowser": "^1.6.0",
     "controlkit": "^0.1.9",
     "createjs-preloadjs": "^0.6.3",
     "createjs-soundjs": "^0.6.2",

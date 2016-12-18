@@ -20,6 +20,13 @@ export default class AppAudio {
 			this.muted = true;
 		}
 
+		createjs.Sound.activePlugin.context.onstatechange = () => {
+			console.log('createjs.Sound.activePlugin.context.onstatechange');
+			if (createjs.Sound.activePlugin.context.state === 'running') {
+				this.unmute();
+			}
+		};
+
 		// pause/resume with page visibility
 		visibly.onHidden(() => {
 			this.wasMuted = this.muted;
@@ -51,6 +58,8 @@ export default class AppAudio {
 		dynamicsNode.connect(this.analyserNode);
 
 		this.values = [];
+		this.oldValues = [];
+		this.kickThreshold = 0.1;
 	}
 
 	getPlayer(name) {
@@ -69,7 +78,7 @@ export default class AppAudio {
 		// loop to position
 		if (params.loopTo !== undefined) {
 			player.loopTo = params.loopTo;
-			player.loopAt = player.duration - 200;
+			player.loopAt = player.duration - 20;
 		}
 
 		player.volume = volume;
@@ -134,6 +143,8 @@ export default class AppAudio {
 		const freqData = new Uint8Array(this.analyserNode.frequencyBinCount);
 		this.analyserNode.getByteFrequencyData(freqData);
 		const length = freqData.length;
+
+		this.oldValues = this.values.concat();
 
 		const bin = Math.ceil(length / this.BINS);
 		for (let i = 0; i < this.BINS; i++) {

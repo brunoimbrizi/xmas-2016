@@ -1,10 +1,15 @@
+import bowser from 'bowser';
+
 import Controls from './ui/Controls';
 import WebGLView from './webgl/WebGLView';
-import AppUI from './AppUI';
+// import AppUI from './AppUI';
+import CanvasFloor from './canvas/CanvasFloor';
+import CanvasBars from './canvas/CanvasBars';
 
 export default class AppView {
 
-	constructor() {
+	constructor(audio) {
+		this.audio = audio;
 		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
 		this.initSketch();
@@ -21,18 +26,21 @@ export default class AppView {
 		});
 
 		this.sketch.setup = () => {
+			this.initCanvasFloor();
 			this.initWebGL();
 			this.initUI();
-			this.initDebugUI();
-
+			// this.initDebugUI();
 		};
 
 		this.sketch.update = () => {
 			this.webGL.update();
+			if (this.canvasFloor) this.canvasFloor.update();
 		};
 
 		this.sketch.draw = () => {
 			this.webGL.draw();
+			if (this.canvasFloor) this.canvasFloor.draw();
+			if (this.canvasBars) this.canvasBars.draw();
 		};
 
 		this.sketch.resize = () => {
@@ -61,7 +69,7 @@ export default class AppView {
 
 	initWebGL() {
 		document.querySelector('.main').appendChild(this.renderer.domElement);
-		this.webGL = new WebGLView(this);
+		this.webGL = new WebGLView(this, this.audio);
 	}
 
 	initUI() {
@@ -71,7 +79,13 @@ export default class AppView {
 	}
 
 	initDebugUI() {
-		this.debugUI = new AppUI(this);
+		// this.debugUI = new AppUI(this);
+		this.canvasBars = new CanvasBars(this, this.audio);
+	}
+
+	initCanvasFloor() {
+		if (bowser.mobile) return;
+		this.canvasFloor = new CanvasFloor(this, this.audio);
 	}
 
 	start() {

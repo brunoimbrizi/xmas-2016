@@ -8,8 +8,10 @@ import Dots from './effects/Dots';
 
 export default class WebGLView {
 
-	constructor(view) {
+	constructor(view, audio) {
 		this.view = view;
+		this.audio = audio;
+
 		this.renderer = this.view.renderer;
 		this.clock = new THREE.Clock;
 
@@ -121,8 +123,12 @@ export default class WebGLView {
 	}
 
 	initFloor() {
-		const geometry = new THREE.CircleBufferGeometry(500, 32);
-		const material = new THREE.MeshLambertMaterial({ color:0xFFFFFF, wireframe: false });
+		let texture = null;
+		if (this.view.canvasFloor) texture = new THREE.Texture(this.view.canvasFloor.canvas);
+
+		const geometry = new THREE.CircleBufferGeometry(512, 32);
+		const material = new THREE.MeshLambertMaterial({ color: 0xFFFFFF, map: texture });
+
 		this.floor = new THREE.Mesh(geometry, material);
 		this.floor.rotation.x = -HALF_PI;
 		this.floor.position.y = -24;
@@ -158,7 +164,11 @@ export default class WebGLView {
 			// this.dots.update();
 		}
 
-		this.lightB.position.z = app.audio.values[10] * this.lightB.iniPosition.z;
+		if (this.floor && this.floor.material.map) {
+			this.floor.material.map.needsUpdate = true;
+		}
+
+		this.lightB.position.z = this.audio.values[10] * this.lightB.iniPosition.z;
 	}
 
 	draw() {

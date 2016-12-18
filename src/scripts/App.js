@@ -11,8 +11,8 @@ export default class App {
 		}
 
 		this.initLoader();
-		this.initView();
 		this.initAudio();
+		this.initView();
 		this.initKnm();
 	}
 
@@ -34,12 +34,12 @@ export default class App {
 		this.preloader.loadManifest('data/manifest.json');
 	}
 
-	initView() {
-		this.view = new AppView();
-	}
-
 	initAudio() {
 		this.audio = new AppAudio();
+	}
+
+	initView() {
+		this.view = new AppView(this.audio);
 	}
 
 	initKnm() {
