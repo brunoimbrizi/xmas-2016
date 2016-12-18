@@ -1,38 +1,3 @@
-:root {
-	--linear         : cubic-bezier(0.250, 0.250, 0.750, 0.750);
-	--ease           : cubic-bezier(0.250, 0.100, 0.250, 1.000);
-	--ease-in        : cubic-bezier(0.420, 0.000, 1.000, 1.000);
-	--ease-out       : cubic-bezier(0.000, 0.000, 0.580, 1.000);
-	--ease-in-out    : cubic-bezier(0.420, 0.000, 0.580, 1.000);
-
-	--easeInQuad     : cubic-bezier(0.550, 0.085, 0.680, 0.530);
-	--easeInCubic    : cubic-bezier(0.550, 0.055, 0.675, 0.190);
-	--easeInQuart    : cubic-bezier(0.895, 0.030, 0.685, 0.220);
-	--easeInQuint    : cubic-bezier(0.755, 0.050, 0.855, 0.060);
-	--easeInSine     : cubic-bezier(0.470, 0.000, 0.745, 0.715);
-	--easeInExpo     : cubic-bezier(0.950, 0.050, 0.795, 0.035);
-	--easeInCirc     : cubic-bezier(0.600, 0.040, 0.980, 0.335);
-	--easeInBack     : cubic-bezier(0.600, -0.280, 0.735, 0.045);
-
-	--easeOutQuad    : cubic-bezier(0.250, 0.460, 0.450, 0.940);
-	--easeOutCubic   : cubic-bezier(0.215, 0.610, 0.355, 1.000);
-	--easeOutQuart   : cubic-bezier(0.165, 0.840, 0.440, 1.000);
-	--easeOutQuint   : cubic-bezier(0.230, 1.000, 0.320, 1.000);
-	--easeInOutQuad    : cubic-bezier(0.390, 0.575, 0.565, 1.000);
-	--easeOutExpo    : cubic-bezier(0.190, 1.000, 0.220, 1.000);
-	--easeOutCirc    : cubic-bezier(0.075, 0.820, 0.165, 1.000);
-	--easeOutBack    : cubic-bezier(0.175, 0.885, 0.320, 1.275);
-
-	--easeInOutQuad  : cubic-bezier(0.455, 0.030, 0.515, 0.955);
-	--easeInOutCubic : cubic-bezier(0.645, 0.045, 0.355, 1.000);
-	--easeInOutQuart : cubic-bezier(0.770, 0.000, 0.175, 1.000);
-	--easeInOutQuint : cubic-bezier(0.860, 0.000, 0.070, 1.000);
-	--easeInOutSine  : cubic-bezier(0.445, 0.050, 0.550, 0.950);
-	--easeInOutExpo  : cubic-bezier(1.000, 0.000, 0.000, 1.000);
-	--easeInOutCirc  : cubic-bezier(0.785, 0.135, 0.150, 0.860);
-	--easeInOutBack  : cubic-bezier(0.680, -0.550, 0.265, 1.550);
-}
-
 /* GLOBAL */
 body {
 	margin: 0;
@@ -68,7 +33,7 @@ body {
 	display: none;
 }
 
-.info .content { 
+.info .content {
 	flex: none;
 	max-width: 80%;
 	text-align: center;
@@ -133,7 +98,7 @@ body {
 }
 .ui .btn.gimmick svg {
 	top: 24px;
-	transition: opacity 0.3s 0.1s var(--easeInOutQuad);
+	transition: opacity 0.3s 0.1s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 .ui .btn.gimmick {
 	position: relative;
@@ -152,7 +117,7 @@ body {
 	width: 100%;
 	text-align: center;
 	opacity: 0;
-	transition: opacity 0.3s var(--easeInOutQuad);
+	transition: opacity 0.3s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 .ui .btn.gimmick .gimmick-touch {
 	display: none;
@@ -177,11 +142,11 @@ body {
 }
 .ui .btn.gimmick.active span {
 	opacity: 1;
-	transition: opacity 0.1s 0.1s var(--easeInOutQuad);
+	transition: opacity 0.1s 0.1s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 .ui.show .btn.gimmick.active svg rect {
 	opacity: 0;
-	transition: opacity 0.3s var(--easeInOutQuad);
+	transition: opacity 0.3s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 .is-touch-device .ui .btn.gimmick svg *:not(.gimmick-touch) {
 	display: none;
@@ -195,79 +160,79 @@ body {
 .ui .btn.drums circle {
 	transform-origin: 50% 50%;
 	transform: scale(0.2);
-	transition: all 0.3s var(--easeInOutQuad);
+	transition: all 0.3s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 .ui.show .btn.drums circle {
 	transform: scale(1);
-	transition: all 0.3s 0.5s var(--easeInOutQuad);
+	transition: all 0.3s 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 /* icon-bass */
 .ui .btn.bass line:nth-of-type(1) {
 	transform-origin: 50% 50%;
 	transform: scaleY(0.1);
-	transition: all 0.3s var(--easeInOutQuad);
+	transition: all 0.3s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 .ui.show .btn.bass line:nth-of-type(1) {
 	transform: scaleY(1);
-	transition: all 0.3s 1.0s var(--easeInOutQuad);
+	transition: all 0.3s 1.0s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 .ui .btn.bass line:nth-of-type(2) {
 	transform-origin: 100% 50%;
 	transform: rotate(30deg);
-	transition: all 0.3s var(--easeInOutQuad);
+	transition: all 0.3s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 .ui.show .btn.bass line:nth-of-type(2) {
 	transform: rotate(0);
-	transition: all 0.3s 1.0s var(--easeInOutQuad);
+	transition: all 0.3s 1.0s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 .ui .btn.bass line:nth-of-type(3) {
 	transform-origin: 100% 50%;
 	transform: rotate(-30deg);
-	transition: all 0.3s var(--easeInOutQuad);
+	transition: all 0.3s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 .ui.show .btn.bass line:nth-of-type(3) {
 	transform: rotate(0);
-	transition: all 0.3s 1.0s var(--easeInOutQuad);
+	transition: all 0.3s 1.0s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 /* icon-key */
 .ui .btn.key line:nth-of-type(1) {
 	transform-origin: 50% 50%;
 	transform: scaleY(0.1);
-	transition: all 0.3s var(--easeInOutQuad);
+	transition: all 0.3s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 .ui.show .btn.key line:nth-of-type(1) {
 	transform: scaleY(1);
-	transition: all 0.3s 1.5s var(--easeInOutQuad);
+	transition: all 0.3s 1.5s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 .ui .btn.key line:nth-of-type(2) {
 	transform-origin: 50% 50%;
 	transform: scaleY(0.1);
-	transition: all 0.3s var(--easeInOutQuad);
+	transition: all 0.3s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 .ui.show .btn.key line:nth-of-type(2) {
 	transform: scaleY(1);
-	transition: all 0.3s 1.5s var(--easeInOutQuad);
+	transition: all 0.3s 1.5s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 .ui .btn.key line:nth-of-type(3) {
 	transform-origin: 50% 50%;
 	transform: scaleY(0.1);
-	transition: all 0.3s var(--easeInOutQuad);
+	transition: all 0.3s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 .ui.show .btn.key line:nth-of-type(3) {
 	transform: scaleY(1);
-	transition: all 0.3s 1.5s var(--easeInOutQuad);
+	transition: all 0.3s 1.5s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 /* icon-gimmick */
 .ui.show .btn.gimmick rect {
 	animation-duration: 0.3s;
 	animation-name: showScale;
 	animation-fill-mode: forwards;
-	animation-timing-function: var(--easeInOutQuad);
+	animation-timing-function: cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 .ui .btn.gimmick rect:nth-of-type(1) {
 	transform-origin: 50% 50%;
 	transform: scale(0.1) translate3d(0, 0, 0);
-	transition: all 0.3s var(--easeInOutQuad);
+	transition: all 0.3s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 .ui.show .btn.gimmick rect:nth-of-type(1) {
 	animation-delay: 2.0s;
@@ -275,7 +240,7 @@ body {
 .ui .btn.gimmick rect:nth-of-type(2) {
 	transform-origin: 50% 50%;
 	transform: scale(0.1) translate3d(0, 0, 0);
-	transition: all 0.3s var(--easeInOutQuad);
+	transition: all 0.3s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 .ui.show .btn.gimmick rect:nth-of-type(2) {
 	animation-delay: 2.05s;
@@ -283,7 +248,7 @@ body {
 .ui .btn.gimmick rect:nth-of-type(3) {
 	transform-origin: 50% 50%;
 	transform: scale(0.1) translate3d(0, 0, 0);
-	transition: all 0.3s var(--easeInOutQuad);
+	transition: all 0.3s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 .ui.show .btn.gimmick rect:nth-of-type(3) {
 	animation-delay: 2.1s;
@@ -291,7 +256,7 @@ body {
 .ui .btn.gimmick rect:nth-of-type(4) {
 	transform-origin: 50% 50%;
 	transform: scale(0.1) translate3d(0, 0, 0);
-	transition: all 0.3s var(--easeInOutQuad);
+	transition: all 0.3s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 .ui.show .btn.gimmick rect:nth-of-type(4) {
 	animation-delay: 2.15s;
@@ -299,7 +264,7 @@ body {
 .ui .btn.gimmick rect:nth-of-type(5) {
 	transform-origin: 50% 50%;
 	transform: scale(0.1) translate3d(0, 0, 0);
-	transition: all 0.3s var(--easeInOutQuad);
+	transition: all 0.3s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 .ui.show .btn.gimmick rect:nth-of-type(5) {
 	animation-delay: 2.2s;
@@ -307,11 +272,11 @@ body {
 .ui .btn.gimmick circle {
 	transform-origin: 50% 50%;
 	transform: scale(0.2);
-	transition: all 0.3s var(--easeInOutQuad);
+	transition: all 0.3s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 .ui.show .btn.gimmick circle {
 	transform: scale(1);
-	transition: all 0.3s 2.0s var(--easeInOutQuad);
+	transition: all 0.3s 2.0s cubic-bezier(0.455, 0.030, 0.515, 0.955);
 }
 
 /* Retina */
@@ -323,10 +288,6 @@ body {
 	.ui .btn.mute.muted {
 		background-image: url('../images/icon-audio-muted@2x.png');
 		background-size: 40px;
-	}
-
-	.is-touch-device .ui .btn.gimmick {
-
 	}
 }
 
@@ -345,11 +306,10 @@ body {
 	.ui .btn.gimmick svg {
 		top: calc(50% - 20px);
 	}
-	.ui .btn.gimmick {
-	}
-	.ui .btn.gimmick.active {
-	}
 	.ui .btn.gimmick span {
+		top: 0;
+	}
+	.is-touch-device .ui .btn.gimmick span {
 		display: none;
 	}
 }

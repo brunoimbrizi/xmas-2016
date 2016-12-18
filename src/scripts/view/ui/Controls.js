@@ -47,6 +47,7 @@ export default class Controls extends EventEmitter {
 			loopTo: BASS_KICKING_IN_TIME,
 			loopAt: instance.duration,
 		};
+		instance.destroy();
 		app.audio.play(REF_TRACK, playParams);
 		app.audio.play('bass-o', playParams);
 		app.audio.play('key-o', playParams);
