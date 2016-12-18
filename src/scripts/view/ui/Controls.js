@@ -4,6 +4,7 @@ import keyMap from '../../util/keyMap';
 import { getRandomInt } from '../../util/math';
 
 const REF_TRACK = 'drums-o';
+const BASS_KICKING_IN_TIME = 4100;
 
 export default class Controls extends EventEmitter {
 	constructor(element) {
@@ -41,13 +42,14 @@ export default class Controls extends EventEmitter {
 	}
 
 	start() {
-		app.audio.play(REF_TRACK, { loopTo: 0 });
-		app.audio.play('bass-o', { loopTo: () => {
-			return app.audio.playing.get(REF_TRACK).position;
-		}});
-		app.audio.play('key-o', { loopTo: () => {
-			return app.audio.playing.get(REF_TRACK).position;
-		}});
+		const instance = createjs.Sound.createInstance(REF_TRACK);
+		const playParams = {
+			loopTo: BASS_KICKING_IN_TIME,
+			loopAt: instance.duration,
+		};
+		app.audio.play(REF_TRACK, playParams);
+		app.audio.play('bass-o', playParams);
+		app.audio.play('key-o', playParams);
 	}
 
 	mute() {
@@ -86,21 +88,21 @@ export default class Controls extends EventEmitter {
 			track.element.classList.remove('xmas');
 		}
 
-		const position = app.audio.playing.get(REF_TRACK).position;
-
+		const position = app.audio.getPlayer(REF_TRACK).position;
+		const playParams = {
+			startAt: position,
+			loopTo: BASS_KICKING_IN_TIME,
+			loopAt: app.audio.getPlayer(REF_TRACK).duration,
+		};
 		if (toStop === REF_TRACK) {
-			app.audio.playing.get(REF_TRACK).volume = 0;
-			app.audio.play(toPlay, { startAt: position, loopTo: () => {
-				return app.audio.playing.get(REF_TRACK).position;
-			}});
+			app.audio.getPlayer(REF_TRACK).volume = 0;
+			app.audio.play(toPlay, playParams);
 		} else if (toPlay === REF_TRACK) {
-			app.audio.playing.get(REF_TRACK).volume = 1;
+			app.audio.getPlayer(REF_TRACK).volume = 1;
 			app.audio.stop(toStop);
 		} else {
 			app.audio.stop(toStop);
-			app.audio.play(toPlay, { startAt: position, loopTo: () => {
-				return app.audio.playing.get(REF_TRACK).position;
-			}});
+			app.audio.play(toPlay, playParams);
 		}
 	}
 

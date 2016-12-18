@@ -80,6 +80,9 @@ export default class AppAudio {
 			player.loopTo = params.loopTo;
 			player.loopAt = player.duration - 20;
 		}
+		if (params.loopAt !== undefined) {
+			player.loopAt = params.loopAt - 20;
+		}
 
 		player.volume = volume;
 
@@ -114,6 +117,12 @@ export default class AppAudio {
 		this.muted = false;
 	}
 
+	playAllAt(time) {
+		for (let [name, player] of this.playing) {
+			player.position = time;
+		}
+	}
+
 	update() {
 		for (let [name, player] of this.playing) {
 			// clear finished
@@ -127,15 +136,14 @@ export default class AppAudio {
 			if (player.position >= player.loopAt) {
 				const diff = player.position - player.loopAt;
 
-				let loopTo;
-				if (typeof player.loopTo === 'function') {
-					loopTo = player.loopTo();
-				} else {
-					loopTo = player.loopTo;
-				}
-
-				this.play(player.name, { startAt: loopTo + diff, loopTo: loopTo }, this.playing.get(player.name).volume);
-				player.loopAt = 0;
+				this.play(player.name, {
+						startAt: player.loopTo + diff,
+						loopTo: player.loopTo,
+						loopAt: player.loopAt,
+					},
+					player.volume
+				);
+				// player.loopAt = 0;
 			}
 		}
 
