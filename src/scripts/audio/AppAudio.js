@@ -21,7 +21,6 @@ export default class AppAudio {
 		}
 
 		createjs.Sound.activePlugin.context.onstatechange = () => {
-			console.log('createjs.Sound.activePlugin.context.onstatechange');
 			if (createjs.Sound.activePlugin.context.state === 'running') {
 				this.unmute();
 			}
