@@ -2,9 +2,9 @@ const glslify = require('glslify');
 
 import ManDeer from './mandeer/ManDeer';
 
-import NormalLines from './effects/NormalLines';
-import Arrows from './effects/Arrows';
-import Dots from './effects/Dots';
+// import NormalLines from './effects/NormalLines';
+// import Arrows from './effects/Arrows';
+// import Dots from './effects/Dots';
 
 export default class WebGLView {
 
@@ -14,6 +14,7 @@ export default class WebGLView {
 
 		this.renderer = this.view.renderer;
 		this.clock = new THREE.Clock;
+		this.center = new THREE.Vector3();
 
 		this.initThree();
 		this.initControls();
@@ -30,13 +31,15 @@ export default class WebGLView {
 
 		// show
 		const time = 2;
-		const ease = Expo.easeInOut;
+		const ease = Expo.easeIn;
 
-		TweenMax.to(this.camera.position, time * 2, { x: -98.30, y: -5.20, z: -20.20, ease, onComplete: () => {
-			this.controls.enabled = true;
+		TweenMax.to(this.camera.position, time * 2, { x: -100, y: 96.19, z: -6.1232, ease, onComplete: () => {
+			// this.controls.enabled = true;
+			this.camera.auto = true;
+			TweenMax.to(this.camera, 1, { thetaf: 1, ease: Quad.easeOut });
 			document.querySelector('.info').classList.add('none');
 		} });
-		TweenMax.to(this.camera.rotation, time, { x: 2.88, y: -1.35, z: -2.90, ease });
+		TweenMax.to(this.camera.rotation, time, { x: -HALF_PI, y: -0.80, z: -HALF_PI, ease });
 		TweenMax.to(this.camera.up, time, { x: 0, y: 1, z: 0, ease });
 	}
 
@@ -53,6 +56,10 @@ export default class WebGLView {
 		this.camera.position.set(0, 300, 0);
 		this.camera.rotation.set(-HALF_PI, 0, -HALF_PI);
 		this.camera.up.set(1, 0, 0);
+
+		this.camera.auto = false;
+		this.camera.theta = HALF_PI;
+		this.camera.thetaf = 1.2;
 	}
 
 	initControls() {
@@ -155,7 +162,16 @@ export default class WebGLView {
 	// ---------------------------------------------------------------------------------------------
 
 	update() {
-		this.controls.update();
+		if (!this.camera.auto) {
+			this.controls.update();
+		} else {
+			this.camera.theta += 0.01 * this.camera.thetaf;
+
+			this.camera.position.x = sin(this.camera.theta) * -100;
+			this.camera.position.y = cos(this.camera.theta * 0.25) * 50 + 50;
+			this.camera.position.z = cos(this.camera.theta) * -100;
+			this.camera.lookAt(this.center);
+		}
 
 		if (this.mandeer) {
 			this.mandeer.update(this.clock.getDelta());
@@ -198,5 +214,11 @@ export default class WebGLView {
 		this.camera.updateProjectionMatrix();;
 
 		this.renderer.setSize(this.view.sketch.width, this.view.sketch.height);
+	}
+
+	touchstart(touch) {
+		if (!this.camera.auto) return;
+		this.controls.enabled = true;
+		this.camera.auto = false;
 	}
 }

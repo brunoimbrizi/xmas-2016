@@ -4,7 +4,7 @@ import Controls from './ui/Controls';
 import WebGLView from './webgl/WebGLView';
 // import AppUI from './AppUI';
 import CanvasFloor from './canvas/CanvasFloor';
-import CanvasBars from './canvas/CanvasBars';
+// import CanvasBars from './canvas/CanvasBars';
 
 export default class AppView {
 
@@ -52,6 +52,7 @@ export default class AppView {
 
 		this.sketch.touchstart = () => {
 			const touch = this.sketch.touches[0];
+			this.webGL.touchstart(touch);
 		};
 
 		this.sketch.touchmove = () => {
