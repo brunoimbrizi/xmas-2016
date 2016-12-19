@@ -28,9 +28,11 @@ export default class App {
 
 		this.preloader.addEventListener('complete', (e) => {
 			// console.log('preloader', e);
-			document.querySelector('.info').classList.add('hide');
-			this.view.init();
-			this.audio.init();
+			requestAnimationFrame(() => {
+				document.querySelector('.info').classList.add('hide');
+				this.view.init();
+				this.audio.init();
+			});
 		});
 
 		this.preloader.loadManifest('data/manifest.json');
