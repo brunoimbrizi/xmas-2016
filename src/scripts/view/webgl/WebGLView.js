@@ -33,13 +33,13 @@ export default class WebGLView {
 		const time = 2;
 		const ease = Expo.easeIn;
 
-		TweenMax.to(this.camera.position, time * 2, { x: -100, y: 96.19, z: -6.1232, ease, onComplete: () => {
+		TweenMax.to(this.camera.position, time * 2, { x: -100, y: 13.42, z: -6.1232, ease, onComplete: () => {
 			// this.controls.enabled = true;
 			this.camera.auto = true;
 			TweenMax.to(this.camera, 1, { thetaf: 1, ease: Quad.easeOut });
 			document.querySelector('.info').classList.add('none');
 		} });
-		TweenMax.to(this.camera.rotation, time, { x: -HALF_PI, y: -0.80, z: -HALF_PI, ease });
+		TweenMax.to(this.camera.rotation, time, { x: -HALF_PI, y: -1.43, z: -HALF_PI, ease });
 		TweenMax.to(this.camera.up, time, { x: 0, y: 1, z: 0, ease });
 	}
 
@@ -59,7 +59,7 @@ export default class WebGLView {
 
 		this.camera.auto = false;
 		this.camera.theta = HALF_PI;
-		this.camera.thetaf = 1.2;
+		this.camera.thetaf = 1.5;
 	}
 
 	initControls() {
@@ -168,7 +168,7 @@ export default class WebGLView {
 			this.camera.theta += 0.01 * this.camera.thetaf;
 
 			this.camera.position.x = sin(this.camera.theta) * -100;
-			this.camera.position.y = cos(this.camera.theta * 0.25) * 50 + 50;
+			this.camera.position.y = cos(this.camera.theta * 0.35 + HALF_PI) * 70 + 50;
 			this.camera.position.z = cos(this.camera.theta) * -100;
 			this.camera.lookAt(this.center);
 		}

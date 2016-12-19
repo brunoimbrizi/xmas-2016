@@ -137,6 +137,9 @@ export default class Controls extends EventEmitter {
 	}
 
 	show() {
-		this.element.classList.add('show');
+		this.element.classList.remove('none');
+		setTimeout(() => {
+			this.element.classList.add('show');
+		}, 10);
 	}
 }

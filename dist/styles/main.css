@@ -61,6 +61,10 @@ body {
 	height: 100%;
 }
 
+.ui.none {
+	display: none;
+}
+
 .ui nav {
 	pointer-events: auto;
 	position: absolute;
