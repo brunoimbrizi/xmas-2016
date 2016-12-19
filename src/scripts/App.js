@@ -22,6 +22,8 @@ export default class App {
 
 		this.preloader.addEventListener('progress', (e) => {
 			// console.log('preloader', e);
+			const progress = Math.round(e.progress * 100);
+			document.querySelector('.info .content h2').innerHTML = `LOADING ${progress}`;
 		});
 
 		this.preloader.addEventListener('complete', (e) => {
